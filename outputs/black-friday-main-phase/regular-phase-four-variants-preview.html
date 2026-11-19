@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Octoparse Black Friday · Regular-phase email concepts</title>
+  <style>
+    :root { font-family: Arial, Helvetica, sans-serif; color: #141017; background: #f1f0f4; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .preview-nav { max-width: 920px; margin: 26px auto 14px; padding: 0 16px; }
+    .preview-nav h1 { margin: 0 0 5px; font-size: 20px; }
+    .preview-nav p { margin: 0 0 15px; font-size: 13px; line-height: 1.5; color: #554f5d; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tabs button { cursor: pointer; border: 1px solid #d1ccd8; border-radius: 7px; padding: 10px 13px; color: #292431; background: white; font: 700 13px Arial, Helvetica, sans-serif; }
+    .tabs button[aria-selected="true"] { color: #050307; border-color: #1ff2cf; background: #d7ffe9; }
+    .meta { max-width: 600px; margin: 0 auto 8px; padding: 0 12px; color: #554f5d; font-size: 12px; line-height: 1.6; }
+    .meta strong { color: #201724; }
+    .email { max-width: 600px; margin: 0 auto 42px; background: #050307; color: #fff; box-shadow: 0 12px 32px #1b0d1b22; }
+    .brand { padding: 18px 34px; display: flex; justify-content: space-between; align-items: center; gap: 8px; border-bottom: 1px solid #34293b; }
+    .brand-name { color: #1ff2cf; font-size: 20px; font-weight: 700; }
+    .brand-event { color: #ffb6eb; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-align: right; }
+    .hero { padding: 25px 34px 25px; text-align: center; }
+    .eyebrow { color: #ffb6eb; font-size: 11px; font-weight: 700; line-height: 1.5; letter-spacing: 1.3px; text-transform: uppercase; }
+    h2 { margin: 9px auto 0; max-width: 520px; font-size: 34px; line-height: 1.13; letter-spacing: -.5px; }
+    .intro { max-width: 490px; margin: 12px auto 0; color: #e6dfeb; font-size: 15px; line-height: 1.5; }
+    .annual-label { margin: 22px 0 8px; color: #1ff2cf; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+    .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .plan { min-width: 0; padding: 16px 10px 15px; border: 1px solid #b5f3d2; border-radius: 9px; background: #d7ffe9; color: #050307; }
+    .plan.single { max-width: 480px; margin: 0 auto; }
+    .pro-grid { grid-template-columns: 1fr 1fr 1.55fr; }
+    .pro-grid .plan { display: flex; flex-direction: column; justify-content: center; padding: 18px 7px; border-color: #51475a; background: #17131d; color: #ffffff; }
+    .pro-grid .plan .price { color: #ffb6eb; font-size: 25px; }
+    .pro-grid .plan .listed { color: #c2bdd2; }
+    .pro-grid .plan.featured { padding: 18px 12px; border: 2px solid #1ff2cf; background: #d7ffe9; color: #050307; }
+    .pro-grid .plan.featured .price { color: #c31991; font-size: 35px; }
+    .pro-grid .plan.featured .listed { color: #4f4555; }
+    .plan-name { min-height: 29px; font-size: 12px; line-height: 1.25; font-weight: 700; text-transform: uppercase; }
+    .price { padding-top: 4px; color: #c31991; font-size: 34px; line-height: 1.1; font-weight: 700; white-space: nowrap; }
+    .price small { font-size: 13px; color: #3a313d; font-weight: 400; }
+    .listed { margin-top: 4px; color: #4f4555; font-size: 12px; line-height: 1.3; }
+    .save { margin-top: 4px; font-size: 13px; line-height: 1.3; font-weight: 700; }
+    .benefit { margin: 10px auto 0; padding: 10px 13px; border-radius: 7px; background: #19121f; border: 1px solid #4c3b54; color: #f4eefa; font-size: 12px; line-height: 1.55; }
+    .assistant-demo { max-width: 490px; margin: 20px auto 0; overflow: hidden; border: 1px solid #55485f; border-radius: 10px; background: #17131d; text-align: left; }
+    .demo-head { padding: 9px 13px; border-bottom: 1px solid #55485f; color: #ffb6eb; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+    .demo-prompt { margin: 12px; padding: 11px 13px; border-radius: 6px; background: #f6f4f8; color: #211a27; font-size: 13px; line-height: 1.4; }
+    .demo-prompt span { display: block; margin-bottom: 4px; color: #655b6b; font-size: 11px; }
+    .demo-paths { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 12px 12px; }
+    .demo-paths span { padding: 6px 8px; border: 1px solid #605268; border-radius: 20px; color: #eee7f2; font-size: 11px; }
+    .demo-paths span:first-child { border-color: #1ff2cf; color: #1ff2cf; }
+    .cta { display: inline-block; margin: 18px auto 0; padding: 14px 24px; border-radius: 5px; background: #1ff2cf; color: #050307; font-size: 15px; line-height: 1.25; font-weight: 700; text-decoration: none; }
+    .alternative { padding: 15px 34px 20px; border-top: 1px solid #493e50; text-align: center; }
+    .alternative h3 { margin: 0 0 5px; color: #fff; font-size: 14px; }
+    .alternative p { margin: 0; color: #cbc3d1; font-size: 12px; line-height: 1.6; }
+    .alternative strong { color: #fff; }
+    .alternative .note { margin-top: 5px; color: #aaa0b4; font-size: 11px; }
+    .alternative a { display: inline-block; margin-top: 8px; color: #7ff7e3; font-size: 12px; }
+    .foot { padding: 15px 24px 18px; border-top: 1px solid #493e50; text-align: center; color: #aaa0b4; font-size: 11px; line-height: 1.55; }
+    .foot a { color: #7ff7e3; }
+    @media (max-width: 620px) {
+      .email { width: 100%; margin-bottom: 24px; }
+      .brand { padding: 16px 21px; }
+      .hero { padding: 22px 21px 23px; }
+      h2 { font-size: 29px; }
+      .plan { padding: 14px 7px; }
+      .price { font-size: 27px; }
+      .plan-name { font-size: 11px; }
+      .pro-grid { grid-template-columns: 1fr 1fr; }
+      .pro-grid .plan.featured { grid-column: 1 / -1; grid-row: 1; }
+      .pro-grid .plan.featured .price { font-size: 33px; }
+      .pro-grid .plan:not(.featured) .price { font-size: 25px; }
+      .alternative { padding: 16px 21px 20px; }
+      .cta { display: block; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-nav">
+    <h1>Regular-phase email concepts</h1>
+    <p>Design preview only. Four audience variants share the prior Early Bird palette; the annual offer stays primary and quarterly pricing is a smaller fallback.</p>
+    <div class="tabs" role="tablist" aria-label="Audience variant">
+      <button type="button" role="tab" data-variant="standard" aria-selected="true">Basic / Standard → Standard Annual</button>
+      <button type="button" role="tab" data-variant="pro" aria-selected="false">Standard Annual / Pro → Pro Annual</button>
+      <button type="button" role="tab" data-variant="trial" aria-selected="false">Trial / former subscribers → Standard</button>
+      <button type="button" role="tab" data-variant="free" aria-selected="false">Inactive free → AI Assistant + Basic</button>
+    </div>
+  </div>
+  <div class="meta" id="meta" aria-live="polite"></div>
+  <main class="email" id="email" aria-live="polite"></main>
+  <script>
+    const landing = 'https://www.octoparse.com/black-friday-sale-2026?utm_source=mailchimp&amp;utm_medium=email&amp;utm_campaign=';
+    const variants = {
+      standard: {
+        audience: 'Basic monthly; Standard monthly and quarterly. Do not use downgrade language for existing Standard users.',
+        subject: 'Early Bird ended. Standard Annual can still save you up to $270',
+        preview: 'Keep more capacity for the year; quarterly offers are available too.',
+        eyebrow: 'EARLY BIRD ENDED · BLACK FRIDAY CONTINUES',
+        headline: 'Standard Annual is still on sale.',
+        intro: 'Keep building with the Standard capacity that fits your work. The Early Bird window closed, but these Black Friday annual prices are still live.',
+        label: 'THE ANNUAL OFFERS',
+        plans: [
+          {name:'Standard 3-Node Annual',price:'$699',listed:'Listed $829',save:'Save $130'},
+          {name:'Standard 6-Node Annual',price:'$929',listed:'Listed $1,199',save:'Save $270'}
+        ],
+        benefit: 'Annual offer: 3-Node includes 3 bonus cloud nodes; 6-Node includes 6 bonus cloud nodes, each for six months.',
+        cta: 'Compare Standard annual plans', campaign:'26bf_std_normal',
+        alternative: '<h3>Prefer a shorter commitment?</h3><p>First-quarter Black Friday prices: <strong>3-Node $209</strong> (listed $239) · <strong>6-Node $249</strong> (listed $299).</p><p class="note">Promotional quarterly prices apply to the first quarter only.</p>'
+      },
+      pro: {
+        audience: 'Standard annual; Pro monthly and quarterly. Pro annual holders need a separate renewal/Enterprise message.',
+        subject: 'Early Bird ended. Pro Annual is still $600 off',
+        preview: 'Compare annual plans: Standard from $699, or Pro for $2,399.',
+        eyebrow: 'EARLY BIRD ENDED · BLACK FRIDAY CONTINUES',
+        headline: 'The Pro Annual offer is still here.',
+        intro: 'For bigger, more demanding data projects, move to Pro Annual while the Black Friday price remains available.',
+        label: 'COMPARE ANNUAL PLANS',
+        plans: [
+          {name:'Standard 3-Node Annual',price:'$699',listed:'Listed $829',save:'Save $130'},
+          {name:'Standard 6-Node Annual',price:'$929',listed:'Listed $1,199',save:'Save $270'},
+          {name:'Pro Annual',price:'$2,399',listed:'Listed $2,999',save:'Save $600',featured:true}
+        ],
+        benefit: 'More capacity for your next stage: 10 bonus cloud nodes for six months with the Pro Annual offer.',
+        cta: 'Explore Pro Annual', campaign:'26bf_pro_normal',
+        alternative: '<h3>Prefer quarterly?</h3><p>The first quarter of <strong>Pro is $699</strong> (listed $779).</p><p class="note">Promotional quarterly price applies to the first quarter only.</p>'
+      },
+      trial: {
+        audience: 'Current/expired trials, former subscribers and recently active free users. Review eligibility before combining into one send.',
+        subject: 'Still have website data to collect? Your Black Friday plan is here',
+        preview: 'Early Bird ended, but Standard Annual still starts at $699.',
+        eyebrow: 'EARLY BIRD ENDED · BLACK FRIDAY CONTINUES',
+        headline: 'Turn your next data project into a plan.',
+        intro: 'You have tried Octoparse. Choose the capacity that makes sense for the data you want to collect next—Black Friday offers are still live.',
+        label: 'CHOOSE YOUR ANNUAL CAPACITY',
+        plans: [
+          {name:'Standard 3-Node Annual',price:'$699',listed:'Listed $829',save:'Save $130'},
+          {name:'Standard 6-Node Annual',price:'$929',listed:'Listed $1,199',save:'Save $270'}
+        ],
+        benefit: 'Annual 3-Node includes 3 bonus cloud nodes; 6-Node includes 6, each for six months. AI Assistant can help you choose a collection path.',
+        cta: 'Compare my plan options', campaign:'26bf_trial_normal',
+        alternative: '<h3>Want to start smaller?</h3><p><strong>Basic is $19/month.</strong> Prefer Standard quarterly? The first quarter is <strong>$209 for 3-Node</strong> or <strong>$249 for 6-Node</strong>.</p><p class="note">Promotional quarterly prices apply to the first quarter only.</p>'
+      },
+      free: {
+        audience: 'Free users who logged in but have not recently started a task. Relevance and a low-friction start take priority over a hard annual upsell.',
+        subject: 'Need website data? Start with Octoparse AI Assistant',
+        preview: 'Tell Octoparse what you need; AI Assistant suggests a way to collect it.',
+        eyebrow: 'A FASTER WAY BACK TO WEBSITE DATA',
+        headline: 'Still need website data? Ask AI Assistant.',
+        intro: 'No need to search through templates or plan every setup step. Tell Octoparse what you want to collect, and AI Assistant can suggest an existing template, browser collection or a cloud approach.',
+        demo: true,
+        cta: 'Try AI Assistant', campaign:'26bf_free_normal',
+        primaryHref: 'https://www.octoparse.com/console/task/agentic?utm_source=mailchimp&amp;utm_medium=email&amp;utm_campaign=26bf_free_normal&amp;utm_content=primary_cta',
+        alternative: '<h3>Ready for more after you try it?</h3><p>Early Bird ended, but Standard Black Friday savings continue: 3-Node Annual is <strong>$699</strong> (listed $829). For a lighter start, Basic is <strong>$19/month</strong>.</p>'
+      }
+    };
+    function render(key) {
+      const v = variants[key];
+      document.querySelectorAll('[data-variant]').forEach(button => button.setAttribute('aria-selected', String(button.dataset.variant === key)));
+      document.getElementById('meta').innerHTML = `<strong>Audience:</strong> ${v.audience}<br><strong>Subject:</strong> ${v.subject}<br><strong>Preview:</strong> ${v.preview}`;
+      const cards = v.plans ? v.plans.map(p => `<div class="plan${v.plans.length === 1 ? ' single' : ''}${p.featured ? ' featured' : ''}"><div class="plan-name">${p.name}</div><div class="price">${p.price}${p.unit ? `<small> ${p.unit}</small>` : ''}</div><div class="listed">${p.listed}</div><div class="save">${p.save}</div></div>`).join('') : '';
+      const offer = v.demo
+        ? '<div class="assistant-demo"><div class="demo-head">OCTOPARSE AI ASSISTANT</div><div class="demo-prompt"><span>Describe the data you need</span>Collect product prices and ratings from these pages.</div><div class="demo-paths"><span>Existing template</span><span>Browser Use</span><span>Cloud Agent</span></div></div>'
+        : `<div class="annual-label">${v.label}</div><div class="plan-grid${key === 'pro' ? ' pro-grid' : ''}">${cards}</div><div class="benefit">${v.benefit}</div>`;
+      const primaryHref = v.primaryHref || `${landing}${v.campaign}&amp;utm_content=primary_cta`;
+      document.getElementById('email').innerHTML = `<div class="brand"><span class="brand-name">Octoparse</span><span class="brand-event">BLACK FRIDAY 2026</span></div><section class="hero"><div class="eyebrow">${v.eyebrow}</div><h2>${v.headline}</h2><p class="intro">${v.intro}</p>${offer}<a class="cta" href="${primaryHref}">${v.cta}</a></section><section class="alternative">${v.alternative}<a href="${landing}${v.campaign}&amp;utm_content=secondary_link">See all Black Friday plans</a></section><footer class="foot">Black Friday offers end Dec 2, 2026 at 11:59 PM EST.<br>You are receiving this because you have an Octoparse account or subscribed to Octoparse updates.<br><a href="#">Unsubscribe placeholder</a> · <a href="https://www.octoparse.com/privacy-policy">Privacy Policy</a></footer>`;
+    }
+    document.querySelectorAll('[data-variant]').forEach(button => button.addEventListener('click', () => render(button.dataset.variant)));
+    render('standard');
+  </script>
+</body>
+</html>

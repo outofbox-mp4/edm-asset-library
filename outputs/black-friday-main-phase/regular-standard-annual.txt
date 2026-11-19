@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Standard Annual | Octoparse Black Friday</title>
+  <!-- Subject: Early Bird ended. Standard Annual can still save you up to $270 -->
+  <!-- Preview: Keep more capacity for the year; quarterly offers are available too. -->
+  <style>
+    @media screen and (max-width:620px) {
+      .email-shell { width:100% !important; }
+      .pad { padding-left:21px !important; padding-right:21px !important; }
+      .headline { font-size:29px !important; line-height:35px !important; }
+      .plan-price { font-size:27px !important; line-height:32px !important; }
+      .button { display:block !important; width:100% !important; box-sizing:border-box !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#ffffff;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;mso-hide:all;">Keep more capacity for the year; quarterly offers are available too.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#ffffff;"><tr><td align="center">
+    <table class="email-shell" role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;border-collapse:collapse;background:#050307;">
+      <tr><td class="pad" style="padding:18px 34px;border-bottom:1px solid #34293b;font-family:Arial,Helvetica,sans-serif;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td style="color:#1ff2cf;font-size:20px;line-height:25px;font-weight:700;">Octoparse</td>
+          <td align="right" style="color:#ffb6eb;font-size:11px;line-height:17px;letter-spacing:1px;font-weight:700;">BLACK FRIDAY 2026</td>
+        </tr></table>
+      </td></tr>
+      <tr><td class="pad" align="center" style="padding:26px 34px 25px;font-family:Arial,Helvetica,sans-serif;text-align:center;">
+        <div style="color:#ffb6eb;font-size:11px;line-height:17px;letter-spacing:1.3px;font-weight:700;">EARLY BIRD ENDED · BLACK FRIDAY CONTINUES</div>
+        <h1 class="headline" style="margin:9px 0 0;color:#ffffff;font-size:34px;line-height:39px;letter-spacing:-.4px;">Standard Annual is still on sale.</h1>
+        <p style="margin:12px 0 0;color:#e6dfeb;font-size:15px;line-height:23px;">The Early Bird window closed, but these Black Friday annual prices are still live. Choose the Standard capacity that fits your next year of data collection.</p>
+        <div style="padding:21px 0 8px;color:#1ff2cf;font-size:11px;line-height:17px;letter-spacing:1.2px;font-weight:700;">THE ANNUAL OFFERS</div>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;"><tr>
+          <td width="49%" align="center" valign="top" style="width:49%;padding:16px 7px 17px;background:#d7ffe9;border:1px solid #b5f3d2;border-radius:9px;font-family:Arial,Helvetica,sans-serif;color:#050307;">
+            <div style="min-height:31px;font-size:12px;line-height:15px;font-weight:700;">STANDARD<br>3-NODE ANNUAL</div>
+            <div class="plan-price" style="padding-top:5px;color:#c31991;font-size:34px;line-height:39px;font-weight:700;white-space:nowrap;">$699</div>
+            <div style="color:#4f4555;font-size:12px;line-height:18px;">Listed $829</div>
+            <div style="font-size:13px;line-height:19px;font-weight:700;">Save $130</div>
+          </td>
+          <td width="2%" style="width:2%;font-size:1px;line-height:1px;">&nbsp;</td>
+          <td width="49%" align="center" valign="top" style="width:49%;padding:16px 7px 17px;background:#d7ffe9;border:1px solid #b5f3d2;border-radius:9px;font-family:Arial,Helvetica,sans-serif;color:#050307;">
+            <div style="min-height:31px;font-size:12px;line-height:15px;font-weight:700;">STANDARD<br>6-NODE ANNUAL</div>
+            <div class="plan-price" style="padding-top:5px;color:#c31991;font-size:34px;line-height:39px;font-weight:700;white-space:nowrap;">$929</div>
+            <div style="color:#4f4555;font-size:12px;line-height:18px;">Listed $1,199</div>
+            <div style="font-size:13px;line-height:19px;font-weight:700;">Save $270</div>
+          </td>
+        </tr></table>
+        <div style="margin-top:10px;padding:10px 13px;background:#19121f;border:1px solid #4c3b54;border-radius:7px;color:#f4eefa;font-size:12px;line-height:19px;">Annual 3-Node includes 3 bonus cloud nodes; 6-Node includes 6 bonus cloud nodes, each for six months.</div>
+        <div style="padding-top:18px;"><a class="button" href="https://www.octoparse.com/black-friday-sale-2026?utm_source=mailchimp&amp;utm_medium=email&amp;utm_campaign=26bf_std_normal&amp;utm_content=primary_cta" target="_blank" style="display:inline-block;padding:14px 24px;background:#1ff2cf;border-radius:5px;color:#050307;font-size:15px;line-height:20px;font-weight:700;text-decoration:none;">Compare Standard annual plans</a></div>
+      </td></tr>
+      <tr><td class="pad" align="center" style="padding:16px 34px 20px;border-top:1px solid #493e50;font-family:Arial,Helvetica,sans-serif;text-align:center;">
+        <div style="color:#ffffff;font-size:14px;line-height:20px;font-weight:700;">Prefer a shorter commitment?</div>
+        <div style="padding-top:5px;color:#cbc3d1;font-size:12px;line-height:19px;">First-quarter Black Friday prices: <strong style="color:#ffffff;">3-Node $209</strong> (listed $239) · <strong style="color:#ffffff;">6-Node $249</strong> (listed $299).</div>
+        <div style="padding-top:5px;color:#aaa0b4;font-size:11px;line-height:17px;">Promotional quarterly prices apply to the first quarter only.</div>
+        <a href="https://www.octoparse.com/black-friday-sale-2026?utm_source=mailchimp&amp;utm_medium=email&amp;utm_campaign=26bf_std_normal&amp;utm_content=secondary_link" target="_blank" style="display:inline-block;padding-top:8px;color:#7ff7e3;font-size:12px;line-height:18px;">See all Black Friday plans</a>
+      </td></tr>
+      <tr><td align="center" style="padding:17px 24px 20px;border-top:1px solid #493e50;font-family:Arial,Helvetica,sans-serif;color:#aaa0b4;font-size:11px;line-height:18px;text-align:center;">
+        Black Friday offers end Dec 2, 2026 at 11:59 PM EST.<br>
+        You are receiving this because you have an Octoparse account or subscribed to Octoparse updates.<br>
+        <a href="*|UNSUB|*" style="color:#7ff7e3;">Unsubscribe</a> · <a href="https://www.octoparse.com/privacy-policy" style="color:#7ff7e3;">Privacy Policy</a><br>
+        *|LIST:ADDRESSLINE|*
+      </td></tr>
+    </table>
+  </td></tr></table>
+</body>
+</html>
