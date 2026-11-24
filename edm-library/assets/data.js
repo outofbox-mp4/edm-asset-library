@@ -12,13 +12,13 @@ window.EDM_LIBRARY = {
     {id:'main-three-plans',name:'Main phase · 三档套餐',phase:'正式活动',audience:'付费用户',goal:'套餐升级',tags:['Main phase','Pro','Standard'],desc:'黑五主活动期的全套餐价格与方案版本。',file:'../outputs/black-friday-main-phase/black-friday-main-three-plans.html',subject:'Black Friday pricing is live',preheader:'Choose the capacity your data operation needs.',cta:'Choose a plan',status:'待复查'}
   ],
   resources: [
-    {name:'Colorlib Email Templates',repo:'ColorlibHQ/email-templates',stars:'1.2k',type:'视觉模板库',use:'活动、促销和 Mailchimp 版式灵感',url:'https://github.com/ColorlibHQ/email-templates'},
-    {name:'konsav Email Templates',repo:'konsav/email-templates',stars:'801',type:'视觉模板库',use:'促销邮件结构与响应式 HTML',url:'https://github.com/konsav/email-templates'},
-    {name:'MJML Template Gallery',repo:'mjmlio/email-templates',stars:'186',type:'模板 + 编译',use:'可复用、可编译的 MJML 邮件',url:'https://github.com/mjmlio/email-templates'},
-    {name:'Responsive HTML Email',repo:'leemunroe/responsive-html-email-template',stars:'13.7k',type:'HTML 骨架',use:'CTA、内联样式和移动端基础结构',url:'https://github.com/leemunroe/responsive-html-email-template'},
-    {name:'Cerberus',repo:'emailmonday/Cerberus',stars:'5.1k',type:'兼容性模式',use:'Outlook、Gmail 与响应式代码规范',url:'https://github.com/emailmonday/Cerberus'},
-    {name:'Postmark Templates',repo:'ActiveCampaign/postmark-templates',stars:'3.2k',type:'SaaS 生命周期',use:'试用、订阅、邀请等稳定事务邮件',url:'https://github.com/ActiveCampaign/postmark-templates'},
-    {name:'Maizzle',repo:'maizzle/maizzle',stars:'Framework',type:'构建框架',use:'组件、变量和品牌样式的长期维护',url:'https://github.com/maizzle/maizzle'},
-    {name:'React Email',repo:'resend/react-email',stars:'19.9k',type:'开发组件库',use:'工程团队使用 React/TypeScript 管理邮件',url:'https://github.com/resend/react-email'}
+    {name:'Colorlib Email Templates',repo:'ColorlibHQ/email-templates',stars:'1.3k',category:'visual',type:'视觉风格库',use:'定义整封活动 / 促销邮件的视觉风格、内容节奏与版式方向',url:'https://github.com/ColorlibHQ/email-templates'},
+    {name:'konsav Email Templates',repo:'konsav/email-templates',stars:'799',category:'modules',type:'内容模块库',use:'稳定的响应式内容排版：步骤、图文、常规营销信息区',url:'https://github.com/konsav/email-templates'},
+    {name:'MJML Template Gallery',repo:'mjmlio/email-templates',stars:'185',category:'scale',type:'规模化邮件库',use:'将共享组件编译为可发送 HTML，适合长期维护源文件',url:'https://github.com/mjmlio/email-templates'},
+    {name:'Responsive HTML Email',repo:'leemunroe/responsive-html-email-template',stars:'13.7k',category:'modules',type:'内容模块库',use:'单列骨架、CTA、移动端与 CSS 内联的基础写法',url:'https://github.com/leemunroe/responsive-html-email-template'},
+    {name:'Cerberus',repo:'emailmonday/Cerberus',stars:'5.1k',category:'modules',type:'内容模块库',use:'复杂模块的 Outlook / Gmail 兼容写法与响应式结构',url:'https://github.com/emailmonday/Cerberus'},
+    {name:'Postmark Templates',repo:'ActiveCampaign/postmark-templates',stars:'3.2k',category:'scale',type:'规模化邮件库',use:'试用、订阅、邀请等 SaaS 生命周期的可复用邮件基础',url:'https://github.com/ActiveCampaign/postmark-templates'},
+    {name:'Maizzle',repo:'maizzle/maizzle',stars:'2.9k',category:'scale',type:'规模化邮件库',use:'组件 + 变量 + 多语言构建的长期维护框架',url:'https://github.com/maizzle/maizzle'},
+    {name:'React Email',repo:'resend/react-email',stars:'20k',category:'scale',type:'规模化邮件库',use:'工程团队使用 React / TypeScript 管理组件与生成邮件',url:'https://github.com/resend/react-email'}
   ]
 };
