@@ -12,9 +12,15 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 必填字段：`id`、`name`、`phase`、`audience`、`goal`、`tags`、`desc`、`file`、`subject`、`preheader`、`cta`、`status`。
 
+模板标签只记录三个维度：`活动`、`阶段`、`人群`。例如 `['Black Friday', '早鸟价', '付费用户']`；请让标签与 `phase`、`audience` 字段一致。
+
 ## 新增外部资源
 
 在同一文件的 `resources` 数组新增资源，并记录用途、类型、链接和检索日期对应的星标数。
+
+## 新增内容组件
+
+在 `assets/component-snippets.js` 增加组件名称、用途、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览与可复制代码；代码入库前仍需完成 Mailchimp、Gmail、Outlook 和移动端测试。
 
 ## 入库门槛
 

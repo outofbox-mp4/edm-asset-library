@@ -3,7 +3,7 @@
   const home = document.getElementById('archive-home');
   const detail = document.getElementById('archive-detail');
   const search = document.getElementById('archive-search');
-  const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',styles:'视觉方向记录',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
+  const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   let selectedTemplate = null, templateFilter = 'all';
 
@@ -27,7 +27,7 @@
   function showView(view) {
     if(!labels[view]) {showHome();return;}
     home.hidden=true;detail.hidden=false;
-    const pages={templates:templatesPage,components:componentsPage,resources:resourcesPage,examples:examplesPage,styles:stylesPage,framework:frameworkPage,guidelines:guidelinesPage,maintenance:maintenancePage};
+    const pages={templates:templatesPage,components:componentsPage,resources:resourcesPage,examples:examplesPage,framework:frameworkPage,guidelines:guidelinesPage,maintenance:maintenancePage};
     pages[view]();scrollTo({top:0,behavior:'auto'});
   }
   function route() {
@@ -44,12 +44,11 @@
   addEventListener('hashchange',route);
 
   function templateRecords() {
-    let overrides={};try{overrides=JSON.parse(localStorage.getItem('edm-template-tags')||'{}')}catch{}
-    return library.templates.map(t=>({...t,tags:overrides[t.id]||t.tags}));
+    return library.templates.map(t=>({...t,tags:[t.campaign||'Black Friday',t.phase,t.audience]}));
   }
   function templatesPage() {
     detail.innerHTML=heading('邮件模板','按营销阶段和用户分层查找；选择条目后在当前页预览 HTML。')+
-      `<input class="detail-search" id="template-search" type="search" placeholder="搜索模板、受众、标签" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button><button data-filter="早鸟价">早鸟价</button><button data-filter="正式活动">正式活动</button><button data-filter="已验证">已验证</button></div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
+      `<input class="detail-search" id="template-search" type="search" placeholder="搜索活动、阶段或人群" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button><button data-filter="早鸟价">早鸟价</button><button data-filter="正式活动">正式活动</button></div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
     document.getElementById('template-search').addEventListener('input',renderTemplateList);
     document.getElementById('template-filters').addEventListener('click',event=>{
       const button=event.target.closest('[data-filter]');if(!button)return;
@@ -61,35 +60,38 @@
       const button=event.target.closest('[data-template]');if(!button)return;
       selectedTemplate=button.dataset.template;renderTemplateList();
     });
-    document.getElementById('template-detail').addEventListener('click',event=>{
-      if(!event.target.closest('[data-edit-tags]'))return;
-      const t=templateRecords().find(item=>item.id===selectedTemplate);if(!t)return;
-      const answer=prompt('用英文逗号分隔标签',t.tags.join(', '));if(answer===null)return;
-      const tags=answer.split(',').map(s=>s.trim()).filter(Boolean);
-      let overrides={};try{overrides=JSON.parse(localStorage.getItem('edm-template-tags')||'{}')}catch{}
-      overrides[t.id]=tags;localStorage.setItem('edm-template-tags',JSON.stringify(overrides));renderTemplateList();
-    });
     renderTemplateList();
   }
   function renderTemplateList() {
     const query=document.getElementById('template-search')?.value.toLowerCase().trim()||'';
-    const rows=templateRecords().filter(t=>(templateFilter==='all'||(templateFilter==='已验证'?t.status==='已验证':t.phase===templateFilter))&&`${t.name} ${t.audience} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
+    const rows=templateRecords().filter(t=>(templateFilter==='all'||t.phase===templateFilter)&&`${t.name} ${t.audience} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
     const list=document.getElementById('template-list'),pane=document.getElementById('template-detail');
     if(!rows.length){list.innerHTML='<div class="empty-state">没有匹配的模板。</div>';pane.innerHTML='<div class="empty-state">调整搜索词或筛选条件。</div>';return;}
     if(!rows.some(t=>t.id===selectedTemplate))selectedTemplate=rows[0].id;
     list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.name)}</b><small>${esc(t.audience)} · ${esc(t.status)}</small></button>`).join('');
     const t=rows.find(item=>item.id===selectedTemplate);
-    pane.innerHTML=`<div class="meta-label">${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p><span class="status ${t.status==='已验证'?'':'review'}">${esc(t.status)}</span><dl><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd><dt>标签</dt><dd>${t.tags.map(esc).join(' · ')}</dd></dl><div class="detail-actions"><button class="plain-button" data-edit-tags>编辑标签</button><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.name)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+    pane.innerHTML=`<div class="meta-label">${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p><span class="status ${t.status==='已验证'?'':'review'}">${esc(t.status)}</span><dl><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd><dt>标签</dt><dd>${t.tags.map(esc).join(' · ')}</dd></dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.name)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
   }
 
   function componentsPage() {
-    const items=[
-      ['首屏 Hero','一个活动目标、一句话价值、一枚主 CTA。适用于黑五、功能上新与套餐升级。','Hero + primary CTA'],
-      ['套餐与价格','同时呈现优惠价、原价、节省金额和套餐适用场景，减少用户自行判断的成本。','Early Bird · $599 · Regular $829'],
-      ['优惠提示条','功能型邮件中的轻量促销提醒；不压过主价值信息。','Black Friday · Save up to 45%'],
-      ['合规页脚','固定保留订阅关系说明、退订入口、隐私链接与主体信息。','Unsubscribe · Privacy Policy']
-    ];
-    detail.innerHTML=heading('内容组件','四类可复用的邮件结构。')+`<div class="compact-grid">${items.map(([name,description,example])=>`<article class="compact-card"><span class="meta-label">${esc(example)}</span><b>${esc(name)}</b><p>${esc(description)}</p></article>`).join('')}</div><div class="archive-note">当前作为结构规范清单。可复制 HTML 组件应在通过客户端测试后再入库。</div>`;
+    const components=window.EDM_COMPONENTS||[];
+    detail.innerHTML=heading('内容组件','预览效果并复制对应的邮件 HTML 片段。')+`<div class="archive-note">代码中的 <code>{{变量}}</code> 需要替换为本次邮件的实际文案、价格和 URL。复制后在 Mailchimp、Gmail、Outlook 和移动端测试。</div>`+components.map(item=>`<section class="component-record" id="component-${esc(item.id)}"><div class="component-heading"><div><h2>${esc(item.name)}</h2><p>${esc(item.description)}</p></div><button class="plain-button copy-component" data-copy="${esc(item.id)}" type="button">复制代码</button></div><div class="component-preview"><iframe title="${esc(item.name)}预览" data-preview="${esc(item.id)}" style="height:${Number(item.height)||220}px" sandbox=""></iframe></div><label class="code-label" for="code-${esc(item.id)}">HTML 代码</label><textarea class="component-code" id="code-${esc(item.id)}" readonly spellcheck="false">${esc(item.html)}</textarea><span class="copy-status" data-copy-status="${esc(item.id)}" role="status"></span></section>`).join('');
+    components.forEach(item=>{
+      const frame=detail.querySelector(`[data-preview="${item.id}"]`);
+      let preview=item.html;
+      for(const [token,value] of Object.entries(item.sample)) preview=preview.replaceAll(token,value);
+      frame.srcdoc=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;background:#fff;">${preview}</body></html>`;
+    });
+    detail.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
+      const item=components.find(entry=>entry.id===button.dataset.copy);
+      const status=detail.querySelector(`[data-copy-status="${button.dataset.copy}"]`);
+      if(!item)return;
+      try {
+        if(navigator.clipboard?.writeText) await navigator.clipboard.writeText(item.html);
+        else {const field=detail.querySelector(`#code-${item.id}`);field.select();if(!document.execCommand('copy'))throw new Error('copy failed');}
+        status.textContent='已复制，可粘贴到邮件 HTML 编辑器。';
+      } catch {status.textContent='复制失败；请在下方代码框中全选后复制。';}
+    }));
   }
   function resourcesPage() {
     const groups=[['visual','视觉风格','用于决定整封邮件的视觉气质与内容节奏。'],['modules','内容模块','解决按钮、单列布局、移动端与客户端兼容。'],['scale','规模化工作流','组件、变量、多语言与长期构建。']];
@@ -104,9 +106,6 @@
       ['Maizzle / MJML','一套组件生成多语言 HTML。','共享 Header、Hero、CTA、Footer、价格卡与 URL 规则；主题、Preheader、标题、正文、CTA 与法律文本按语言维护。','同一组件读取 en/de/fr 文案文件，构建各语言可发送 HTML，再分别导入 Mailchimp。避免逐份复制和手改英文 HTML。']
     ];
     detail.innerHTML=heading('资源使用示例','把参考库转成可复用的邮件结构。')+examples.map(([source,title,description,application],i)=>`<details class="example-item" ${i===0?'open':''}><summary>${esc(source)} · ${esc(title)}</summary><p>${esc(description)}</p><p>${esc(application)}</p></details>`).join('')+`<div class="archive-note">借鉴结构、兼容写法与内容层级；外部资源的品牌图片、文案和链接不直接用于 Octoparse 邮件。当前优先挑选版式参考、用 Cerberus 审核复杂排版，并将测试通过的模块入自有库；MJML 等工程化工具作为后续工作流。</div>`;
-  }
-  function stylesPage() {
-    detail.innerHTML=heading('视觉方向记录','早期知识库页面的三种风格探索。')+`<div class="compact-grid"><article class="compact-card"><b>编辑型档案库</b><p>像长期维护的个人研究刊物，强调观点和精选条目。</p></article><article class="compact-card"><b>极简收藏夹</b><p>以检索和分类为主，视觉存在感低；当前索引采用这一方向。</p></article><article class="compact-card"><b>研究索引</b><p>专题、观察和资产并列，更适合系统研究笔记。</p></article></div><div class="archive-note">这份记录是页面方向的历史比较，不是可发送的邮件模板。</div>`;
   }
   function frameworkPage() {
     const gold=[['受众相关性','按生命周期、使用行为和购买意图分层。'],['单一目标','每封邮件只推动一个清晰的主行动。'],['价值先于优惠','先说明用户获得什么，再说明何时行动。'],['交付与可读性','兼顾层级、移动端、Gmail 和 Outlook。'],['可衡量闭环','用结果持续反哺下一轮内容与分层。']];
