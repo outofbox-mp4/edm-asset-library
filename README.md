@@ -1,10 +1,10 @@
-# Octoparse EDM Asset Library
+# Growth Asset Library
 
-Long-term home for Octoparse email marketing assets.
+Personal growth asset library for advertising and email marketing work. GitHub stores the source files; the published site provides browsable previews and context.
 
 ## Start here
 
-Open `edm-library/index.html` to browse the asset site.
+Open `index.html` for the growth desktop, or `edm-library/index.html` for the dedicated EDM desktop. The previous EDM overview remains at `edm-library/overview-classic.html`.
 
 ## Contents
 
