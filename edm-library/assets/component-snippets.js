@@ -88,9 +88,9 @@ window.EDM_COMPONENTS = [
     html: `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#F6F8F5;">
   <tr><td align="center" style="padding:24px 22px 30px;">
     <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;max-width:600px;">
-      <tr><td align="center" style="font-family:Arial,Helvetica,sans-serif;color:#5E6860;font-size:12px;line-height:1.6;padding-bottom:9px;">You are receiving this email because you have a {{BRAND_NAME}} account or subscribed to {{BRAND_NAME}} updates.</td></tr>
-      <tr><td align="center" style="font-family:Arial,Helvetica,sans-serif;color:#5E6860;font-size:12px;line-height:1.6;padding-bottom:9px;"><a href="*|UNSUB|*" style="color:#365A46;text-decoration:underline;">Unsubscribe</a> &nbsp;·&nbsp; <a href="{{PRIVACY_URL}}" style="color:#365A46;text-decoration:underline;">Privacy Policy</a></td></tr>
-      <tr><td align="center" style="font-family:Arial,Helvetica,sans-serif;color:#5E6860;font-size:12px;line-height:1.6;">*|LIST:ADDRESS|*</td></tr>
+      <tr><td align="center" style="font-family:Arial,Helvetica,sans-serif;color:#5E6860;font-size:12px;line-height:1.6;padding-bottom:9px;">You are receiving this because you have subscribed to Octoparse updates.<br>
+        <a href="*|UNSUB|*" style="color:#7FF7E3;text-decoration:underline;">Unsubscribe</a>· <a href="https://www.octoparse.com/privacy-policy" style="color:#7FF7E3;text-decoration:underline;">Privacy Policy</a><br>
+            © Octopus Data Inc. 2026. All rights reserved.</td></tr>
     </table>
   </td></tr>
 </table>`
