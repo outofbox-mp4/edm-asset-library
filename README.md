@@ -4,7 +4,9 @@ Personal growth asset library for advertising and email marketing work. GitHub s
 
 ## Start here
 
-Open `index.html` for the growth desktop, or `edm-library/index.html` for the dedicated EDM desktop. The previous EDM overview remains at `edm-library/overview-classic.html`.
+Open `index.html` for the shared growth desktop. Advertising and EDM are two apps in the same interface. `edm-library/index.html` opens that desktop with the EDM app selected. The previous EDM overview remains at `edm-library/overview-classic.html`.
+
+The desktop interaction and pixel art are adapted from the [Cats with Jobs Webflow Clonable](https://cats-with-jobs.webflow.io/) by KC Kat Creative. Credits also appear inside the desktop.
 
 ## Contents
 
