@@ -13,6 +13,8 @@ window.EDM_LIBRARY = {
   ],
   resources: [
     {name:'Colorlib Email Templates',repo:'ColorlibHQ/email-templates',stars:'1.3k',category:'visual',type:'视觉风格库',use:'定义整封活动 / 促销邮件的视觉风格、内容节奏与版式方向',url:'https://github.com/ColorlibHQ/email-templates'},
+    {name:'Really Good Emails',repo:'reallygoodemails.com',stars:'案例库',category:'visual',type:'真实品牌案例',use:'按行业、意图和邮件类型查找真实品牌的整封邮件视觉参考',url:'https://reallygoodemails.com/'},
+    {name:'Email Love',repo:'emaillove.com',stars:'案例库',category:'visual',type:'真实品牌案例',use:'查看活动创意、设计趋势与跨行业整封邮件灵感',url:'https://emaillove.com/'},
     {name:'konsav Email Templates',repo:'konsav/email-templates',stars:'799',category:'modules',type:'内容模块库',use:'稳定的响应式内容排版：步骤、图文、常规营销信息区',url:'https://github.com/konsav/email-templates'},
     {name:'MJML Template Gallery',repo:'mjmlio/email-templates',stars:'185',category:'scale',type:'规模化邮件库',use:'将共享组件编译为可发送 HTML，适合长期维护源文件',url:'https://github.com/mjmlio/email-templates'},
     {name:'Responsive HTML Email',repo:'leemunroe/responsive-html-email-template',stars:'13.7k',category:'modules',type:'内容模块库',use:'单列骨架、CTA、移动端与 CSS 内联的基础写法',url:'https://github.com/leemunroe/responsive-html-email-template'},
