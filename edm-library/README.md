@@ -16,6 +16,10 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 模板页按活动筛选，标题自动显示为“阶段 · 适配人群”。同一人群若有多个版本，可在 `variant` 字段写一句简短区分说明，例如 `Standard 单档`；它会显示在标题下方。
 
+### Mailchimp Saved 模板
+
+`EN26黑五` 文件夹中的 20 份完整 HTML 导出存放于 `../outputs/mailchimp-en26-black-friday/`，索引元数据在 `assets/mailchimp-templates.js`。记录保留 Mailchimp 模板 ID、原始名称、活动阶段和适配人群。此批是 Saved 模板原件；发送前仍需复核优惠时效、链接、变量、退订信息和客户端显示。只有 HTML 中明确写出的主题行与 Preview 才录入对应字段。
+
 ## 新增外部资源
 
 在同一文件的 `resources` 数组新增资源，并记录用途、类型、链接和检索日期对应的星标数。

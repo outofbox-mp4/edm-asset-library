@@ -44,10 +44,11 @@
   addEventListener('hashchange',route);
 
   function templateRecords() {
-    return library.templates.map(t=>{
+    const phaseOrder={'预热期':0,'早鸟价':1,'早鸟价 36h':1,'正式活动':2};
+    return [...library.templates,...(window.EDM_MAILCHIMP_TEMPLATES||[])].map(t=>{
       const campaign=t.campaign||t.tags?.[0]||'Black Friday';
       return {...t,campaign,displayName:`${t.phase} · ${t.audience}`,tags:[campaign,t.phase,t.audience]};
-    });
+    }).sort((a,b)=>(phaseOrder[a.phase]??9)-(phaseOrder[b.phase]??9)||a.audience.localeCompare(b.audience,'zh'));
   }
   function templatesPage() {
     const campaigns=[...new Set(templateRecords().map(t=>t.campaign))];
@@ -74,7 +75,7 @@
     if(!rows.some(t=>t.id===selectedTemplate))selectedTemplate=rows[0].id;
     list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.displayName)}</b><small>${esc(t.variant||t.desc)}</small></button>`).join('');
     const t=rows.find(item=>item.id===selectedTemplate);
-    pane.innerHTML=`<div class="meta-label">${esc(t.campaign)}</div><h2>${esc(t.displayName)}</h2><p>${esc(t.variant||t.desc)}</p><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd></dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.displayName)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+    pane.innerHTML=`<div class="meta-label">${esc(t.campaign)}</div><h2>${esc(t.displayName)}</h2><p>${esc(t.variant||t.desc)}</p><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd>${t.source?`<dt>来源</dt><dd>${esc(t.source)} · ${esc(t.name)}</dd>`:''}${t.subject?`<dt>主题行</dt><dd>${esc(t.subject)}</dd>`:''}${t.preheader?`<dt>Preheader</dt><dd>${esc(t.preheader)}</dd>`:''}${t.cta?`<dt>主 CTA</dt><dd>${esc(t.cta)}</dd>`:''}</dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.displayName)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
   }
 
   function componentsPage() {
@@ -123,7 +124,7 @@
     detail.innerHTML=heading('发送与入库规范','品牌、内容、链接和客户端检查口径。')+`<table class="archive-table"><thead><tr><th>项目</th><th>当前规范</th><th>检查点</th></tr></thead><tbody>${rows.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table><div class="archive-note"><b>模板命名</b>：<code>[阶段]-[人群]-[目标]-[套餐/功能]-v01.html</code><br>例如 <code>earlybird-active-standard-upgrade-v01.html</code>。</div>`;
   }
   function maintenancePage() {
-    detail.innerHTML=heading('维护说明','源文件和站点数据在 GitHub 维护。')+`<section class="detail-section"><h2>新增品牌模板</h2><p>将最终 HTML 放入相应的 <code>outputs/</code> 目录，并在 <code>edm-library/assets/data.js</code> 的 <code>templates</code> 数组新增记录。</p><p>必填字段：id、name、phase、audience、goal、tags、desc、file、subject、preheader、cta、status。</p></section><section class="detail-section"><h2>新增外部资源</h2><p>在同一数据文件的 <code>resources</code> 数组记录用途、类型、来源链接和检索日期。</p></section><section class="detail-section"><h2>入库门槛</h2><ol><li>品牌 Logo 与色彩已确认。</li><li>CTA、UTM 与人群文案已替换。</li><li>完成移动端、Gmail、Outlook 与 Mailchimp 测试。</li><li>记录主题行、Preheader、发送时机及最终表现。</li></ol></section><a class="source-link" href="https://github.com/outofbox-mp4/edm-asset-library/blob/main/edm-library/README.md" target="_blank" rel="noopener noreferrer">查看 GitHub 中的维护原文</a>`;
+    detail.innerHTML=heading('维护说明','源文件和站点数据在 GitHub 维护。')+`<section class="detail-section"><h2>新增品牌模板</h2><p>将最终 HTML 放入相应的 <code>outputs/</code> 目录，并在 <code>edm-library/assets/data.js</code> 的 <code>templates</code> 数组新增记录。Mailchimp Saved 原件另存于 <code>outputs/mailchimp-en26-black-friday/</code>，索引在 <code>edm-library/assets/mailchimp-templates.js</code>。</p><p>标题由活动阶段与适配人群生成；未知的主题行和 Preheader 留空，不自行补写。</p></section><section class="detail-section"><h2>新增外部资源</h2><p>在同一数据文件的 <code>resources</code> 数组记录用途、类型、来源链接和检索日期。</p></section><section class="detail-section"><h2>入库门槛</h2><ol><li>品牌 Logo 与色彩已确认。</li><li>CTA、UTM 与人群文案已替换。</li><li>完成移动端、Gmail、Outlook 与 Mailchimp 测试。</li><li>记录主题行、Preheader、发送时机及最终表现。</li></ol></section><a class="source-link" href="https://github.com/outofbox-mp4/edm-asset-library/blob/main/edm-library/README.md" target="_blank" rel="noopener noreferrer">查看 GitHub 中的维护原文</a>`;
   }
   route();
 })();
