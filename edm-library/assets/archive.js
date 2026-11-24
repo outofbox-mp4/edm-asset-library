@@ -44,11 +44,15 @@
   addEventListener('hashchange',route);
 
   function templateRecords() {
-    return library.templates.map(t=>({...t,tags:[t.campaign||'Black Friday',t.phase,t.audience]}));
+    return library.templates.map(t=>{
+      const campaign=t.campaign||t.tags?.[0]||'Black Friday';
+      return {...t,campaign,displayName:`${t.phase} · ${t.audience}`,tags:[campaign,t.phase,t.audience]};
+    });
   }
   function templatesPage() {
-    detail.innerHTML=heading('邮件模板','按营销阶段和用户分层查找；选择条目后在当前页预览 HTML。')+
-      `<input class="detail-search" id="template-search" type="search" placeholder="搜索活动、阶段或人群" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button><button data-filter="早鸟价">早鸟价</button><button data-filter="正式活动">正式活动</button></div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
+    const campaigns=[...new Set(templateRecords().map(t=>t.campaign))];
+    detail.innerHTML=heading('邮件模板','按活动查找，在当前页查看分层版本与 HTML 预览。')+
+      `<input class="detail-search" id="template-search" type="search" placeholder="搜索活动、阶段或人群" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button>${campaigns.map(c=>`<button data-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
     document.getElementById('template-search').addEventListener('input',renderTemplateList);
     document.getElementById('template-filters').addEventListener('click',event=>{
       const button=event.target.closest('[data-filter]');if(!button)return;
@@ -64,13 +68,13 @@
   }
   function renderTemplateList() {
     const query=document.getElementById('template-search')?.value.toLowerCase().trim()||'';
-    const rows=templateRecords().filter(t=>(templateFilter==='all'||t.phase===templateFilter)&&`${t.name} ${t.audience} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
+    const rows=templateRecords().filter(t=>(templateFilter==='all'||t.campaign===templateFilter)&&`${t.name} ${t.displayName} ${t.variant||''} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
     const list=document.getElementById('template-list'),pane=document.getElementById('template-detail');
     if(!rows.length){list.innerHTML='<div class="empty-state">没有匹配的模板。</div>';pane.innerHTML='<div class="empty-state">调整搜索词或筛选条件。</div>';return;}
     if(!rows.some(t=>t.id===selectedTemplate))selectedTemplate=rows[0].id;
-    list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.name)}</b><small>${esc(t.audience)} · ${esc(t.status)}</small></button>`).join('');
+    list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.displayName)}</b><small>${esc(t.variant||t.desc)}</small></button>`).join('');
     const t=rows.find(item=>item.id===selectedTemplate);
-    pane.innerHTML=`<div class="meta-label">${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p><span class="status ${t.status==='已验证'?'':'review'}">${esc(t.status)}</span><dl><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd><dt>标签</dt><dd>${t.tags.map(esc).join(' · ')}</dd></dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.name)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+    pane.innerHTML=`<div class="meta-label">${esc(t.campaign)}</div><h2>${esc(t.displayName)}</h2><p>${esc(t.variant||t.desc)}</p><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd></dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.displayName)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
   }
 
   function componentsPage() {
