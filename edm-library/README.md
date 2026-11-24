@@ -2,6 +2,8 @@
 
 这是一个无需构建工具的静态资产库。
 
+EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览入口。模板、组件、外部资源、使用示例和质量标准均在同一页内查看；原有分散页面会跳转到该索引页的对应档案。GitHub Pages 入口为 `https://outofbox-mp4.github.io/edm-asset-library/edm-library/`。
+
 > 当 Agent 可以自动写文案、拼装 HTML 和发起任务时，人的价值不再是重复制作，而是定义策略、标准、质量门槛和反馈闭环。这个资产站用于把这些能力沉淀为可复用系统。
 
 ## 新增品牌模板

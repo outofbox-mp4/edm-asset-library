@@ -122,7 +122,7 @@
     selectedTemplate=t;
     $('#detail-title').textContent=t.name;
     const src=t.file.replace(/^\.\.\//,'');
-    $('#detail-body').innerHTML=`<div class="eyebrow">EDM / ${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p class="lead">${esc(t.desc)}</p><div class="meta-grid"><div><b>主题行</b>${esc(t.subject)}</div><div><b>Preheader</b>${esc(t.preheader)}</div><div><b>主要行动</b>${esc(t.cta)}</div><div><b>状态</b>${esc(t.status)}</div></div><div class="button-row"><a class="secondary" href="edm-library/template-detail.html?id=${encodeURIComponent(t.id)}">查看资产记录</a><a class="secondary" href="${src}" target="_blank" rel="noopener">新标签打开邮件</a></div><h3>HTML 预览</h3><iframe class="mail-preview" title="${esc(t.name)} 邮件 HTML 预览" src="${src}" loading="lazy"></iframe>`;
+    $('#detail-body').innerHTML=`<div class="eyebrow">EDM / ${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p class="lead">${esc(t.desc)}</p><div class="meta-grid"><div><b>主题行</b>${esc(t.subject)}</div><div><b>Preheader</b>${esc(t.preheader)}</div><div><b>主要行动</b>${esc(t.cta)}</div><div><b>状态</b>${esc(t.status)}</div></div><div class="button-row"><a class="secondary" href="edm-library/overview-classic.html#templates?id=${encodeURIComponent(t.id)}">查看档案记录</a><a class="secondary" href="${src}" target="_blank" rel="noopener">新标签打开邮件</a></div><h3>HTML 预览</h3><iframe class="mail-preview" title="${esc(t.name)} 邮件 HTML 预览" src="${src}" loading="lazy"></iframe>`;
     openWindow('detail');
   });
   $('#edm-resources').addEventListener('click',event=>{

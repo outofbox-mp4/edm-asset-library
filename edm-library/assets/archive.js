@@ -1,0 +1,126 @@
+(() => {
+  const library = window.EDM_LIBRARY;
+  const home = document.getElementById('archive-home');
+  const detail = document.getElementById('archive-detail');
+  const search = document.getElementById('archive-search');
+  const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',styles:'视觉方向记录',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  let selectedTemplate = null, templateFilter = 'all';
+
+  search.addEventListener('input', () => {
+    const term=search.value.trim().toLowerCase();let total=0;
+    document.querySelectorAll('.group').forEach(group => {
+      let count=0;group.querySelectorAll('.row').forEach(row => {
+        const match=row.textContent.toLowerCase().includes(term);
+        row.hidden=!match;if(match)count++;
+      });
+      group.hidden=count===0;total+=count;
+    });
+    document.getElementById('empty').classList.toggle('show',total===0);
+  });
+  function heading(title,description='') {return `<button class="detail-back" data-home>← 全部档案</button><header class="detail-header"><h1>${title}</h1>${description?`<p>${description}</p>`:''}</header>`;}
+  function showHome(group) {
+    home.hidden=false;detail.hidden=true;detail.innerHTML='';
+    if(group)document.getElementById(group)?.scrollIntoView({block:'start'});
+    else scrollTo({top:0,behavior:'auto'});
+  }
+  function showView(view) {
+    if(!labels[view]) {showHome();return;}
+    home.hidden=true;detail.hidden=false;
+    const pages={templates:templatesPage,components:componentsPage,resources:resourcesPage,examples:examplesPage,styles:stylesPage,framework:frameworkPage,guidelines:guidelinesPage,maintenance:maintenancePage};
+    pages[view]();scrollTo({top:0,behavior:'auto'});
+  }
+  function route() {
+    const [key,query='']=decodeURIComponent(location.hash.slice(1)).split('?');
+    if(key==='templates'&&query.startsWith('id='))selectedTemplate=query.slice(3);
+    if(labels[key])showView(key);
+    else showHome(['owned','references','standards'].includes(key)?key:null);
+  }
+  document.addEventListener('click', event => {
+    const row=event.target.closest('a.row');
+    if(row) {if(location.hash===row.getAttribute('href')) {event.preventDefault();route();}return;}
+    if(event.target.closest('[data-home]')) {if(location.hash==='#index')showHome();else location.hash='index';}
+  });
+  addEventListener('hashchange',route);
+
+  function templateRecords() {
+    let overrides={};try{overrides=JSON.parse(localStorage.getItem('edm-template-tags')||'{}')}catch{}
+    return library.templates.map(t=>({...t,tags:overrides[t.id]||t.tags}));
+  }
+  function templatesPage() {
+    detail.innerHTML=heading('邮件模板','按营销阶段和用户分层查找；选择条目后在当前页预览 HTML。')+
+      `<input class="detail-search" id="template-search" type="search" placeholder="搜索模板、受众、标签" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button><button data-filter="早鸟价">早鸟价</button><button data-filter="正式活动">正式活动</button><button data-filter="已验证">已验证</button></div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
+    document.getElementById('template-search').addEventListener('input',renderTemplateList);
+    document.getElementById('template-filters').addEventListener('click',event=>{
+      const button=event.target.closest('[data-filter]');if(!button)return;
+      templateFilter=button.dataset.filter;
+      document.querySelectorAll('#template-filters button').forEach(item=>item.classList.toggle('active',item===button));
+      renderTemplateList();
+    });
+    document.getElementById('template-list').addEventListener('click',event=>{
+      const button=event.target.closest('[data-template]');if(!button)return;
+      selectedTemplate=button.dataset.template;renderTemplateList();
+    });
+    document.getElementById('template-detail').addEventListener('click',event=>{
+      if(!event.target.closest('[data-edit-tags]'))return;
+      const t=templateRecords().find(item=>item.id===selectedTemplate);if(!t)return;
+      const answer=prompt('用英文逗号分隔标签',t.tags.join(', '));if(answer===null)return;
+      const tags=answer.split(',').map(s=>s.trim()).filter(Boolean);
+      let overrides={};try{overrides=JSON.parse(localStorage.getItem('edm-template-tags')||'{}')}catch{}
+      overrides[t.id]=tags;localStorage.setItem('edm-template-tags',JSON.stringify(overrides));renderTemplateList();
+    });
+    renderTemplateList();
+  }
+  function renderTemplateList() {
+    const query=document.getElementById('template-search')?.value.toLowerCase().trim()||'';
+    const rows=templateRecords().filter(t=>(templateFilter==='all'||(templateFilter==='已验证'?t.status==='已验证':t.phase===templateFilter))&&`${t.name} ${t.audience} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
+    const list=document.getElementById('template-list'),pane=document.getElementById('template-detail');
+    if(!rows.length){list.innerHTML='<div class="empty-state">没有匹配的模板。</div>';pane.innerHTML='<div class="empty-state">调整搜索词或筛选条件。</div>';return;}
+    if(!rows.some(t=>t.id===selectedTemplate))selectedTemplate=rows[0].id;
+    list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.name)}</b><small>${esc(t.audience)} · ${esc(t.status)}</small></button>`).join('');
+    const t=rows.find(item=>item.id===selectedTemplate);
+    pane.innerHTML=`<div class="meta-label">${esc(t.phase)} / ${esc(t.audience)}</div><h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p><span class="status ${t.status==='已验证'?'':'review'}">${esc(t.status)}</span><dl><dt>目标</dt><dd>${esc(t.goal)}</dd><dt>主题行</dt><dd>${esc(t.subject)}</dd><dt>Preheader</dt><dd>${esc(t.preheader)}</dd><dt>主 CTA</dt><dd>${esc(t.cta)}</dd><dt>标签</dt><dd>${t.tags.map(esc).join(' · ')}</dd></dl><div class="detail-actions"><button class="plain-button" data-edit-tags>编辑标签</button><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.name)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+  }
+
+  function componentsPage() {
+    const items=[
+      ['首屏 Hero','一个活动目标、一句话价值、一枚主 CTA。适用于黑五、功能上新与套餐升级。','Hero + primary CTA'],
+      ['套餐与价格','同时呈现优惠价、原价、节省金额和套餐适用场景，减少用户自行判断的成本。','Early Bird · $599 · Regular $829'],
+      ['优惠提示条','功能型邮件中的轻量促销提醒；不压过主价值信息。','Black Friday · Save up to 45%'],
+      ['合规页脚','固定保留订阅关系说明、退订入口、隐私链接与主体信息。','Unsubscribe · Privacy Policy']
+    ];
+    detail.innerHTML=heading('内容组件','四类可复用的邮件结构。')+`<div class="compact-grid">${items.map(([name,description,example])=>`<article class="compact-card"><span class="meta-label">${esc(example)}</span><b>${esc(name)}</b><p>${esc(description)}</p></article>`).join('')}</div><div class="archive-note">当前作为结构规范清单。可复制 HTML 组件应在通过客户端测试后再入库。</div>`;
+  }
+  function resourcesPage() {
+    const groups=[['visual','视觉风格','用于决定整封邮件的视觉气质与内容节奏。'],['modules','内容模块','解决按钮、单列布局、移动端与客户端兼容。'],['scale','规模化工作流','组件、变量、多语言与长期构建。']];
+    detail.innerHTML=heading('外部资源','先看用途，再访问原项目或案例网站。')+groups.map(([key,name,description])=>`<section class="detail-section resource-category"><h2>${name}</h2><p>${description}</p>${library.resources.filter(r=>r.category===key).map(r=>`<div class="resource-entry"><b>${esc(r.name)}</b><span>${esc(r.type)} · ${esc(r.use)}</span><a class="inline-link" href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${r.stars==='案例库'?'访问案例网站':'查看 GitHub 项目'}</a></div>`).join('')}</section>`).join('')+`<div class="archive-note">借鉴结构、层级和兼容写法。纳入自有库前，需重做品牌元素、确认授权，并测试目标邮件客户端。</div>`;
+  }
+  function examplesPage() {
+    const examples=[
+      ['Colorlib + Leemunroe','黑五活动邮件：先定整封邮件风格，再填内容模块。','Colorlib 定整封邮件的 600px 骨架、首屏比例、间距、按钮、分区与页脚；Leemunroe 提供 HTML 容器、CTA 和内联样式基础。','先统一页头、按钮和页脚；按活动替换 Hero、功能说明和价格区；导入 Mailchimp 前测试 Gmail 与 Outlook。'],
+      ['konsav','AI Assistant：仅在需要解释操作时使用步骤模块。','三步说明是按需结构，适合首次上手、功能介绍与试用激活。纯促销、到期提醒或单 CTA 邮件可省略。','输入 URL 与目标字段 → 选择模板、Browser Use 或 Cloud Agent → 调整字段，复核结果并导出。'],
+      ['Cerberus','用兼容性写法承载复杂排版。','Cerberus 是邮件客户端兼容性底座，价格双栏只是示例；图文双栏、功能对比、双 CTA、背景色提示区也适用。','重点检查 Outlook/Gmail 双栏是否稳定、按钮是否可点、移动端顺序是否正确；复杂区块优先使用兼容的表格结构。'],
+      ['Postmark','试用用户的 SaaS 生命周期序列。','每封只推动一个下一步，按行为触发或停止。产品价值邮件与优惠邮件分开管理；已完成关键动作的用户跳过对应提醒。','Day 0 试用欢迎与输入 URL → Day 1 未建任务者的首次任务示例 → 首次成功后介绍扩展场景 → Day 3 按行为推荐功能 → Day 5 展示使用成果 → Day 6 到期提醒 → Day 7 按用量建议 Basic / Standard。'],
+      ['Maizzle / MJML','一套组件生成多语言 HTML。','共享 Header、Hero、CTA、Footer、价格卡与 URL 规则；主题、Preheader、标题、正文、CTA 与法律文本按语言维护。','同一组件读取 en/de/fr 文案文件，构建各语言可发送 HTML，再分别导入 Mailchimp。避免逐份复制和手改英文 HTML。']
+    ];
+    detail.innerHTML=heading('资源使用示例','把参考库转成可复用的邮件结构。')+examples.map(([source,title,description,application],i)=>`<details class="example-item" ${i===0?'open':''}><summary>${esc(source)} · ${esc(title)}</summary><p>${esc(description)}</p><p>${esc(application)}</p></details>`).join('')+`<div class="archive-note">借鉴结构、兼容写法与内容层级；外部资源的品牌图片、文案和链接不直接用于 Octoparse 邮件。当前优先挑选版式参考、用 Cerberus 审核复杂排版，并将测试通过的模块入自有库；MJML 等工程化工具作为后续工作流。</div>`;
+  }
+  function stylesPage() {
+    detail.innerHTML=heading('视觉方向记录','早期知识库页面的三种风格探索。')+`<div class="compact-grid"><article class="compact-card"><b>编辑型档案库</b><p>像长期维护的个人研究刊物，强调观点和精选条目。</p></article><article class="compact-card"><b>极简收藏夹</b><p>以检索和分类为主，视觉存在感低；当前索引采用这一方向。</p></article><article class="compact-card"><b>研究索引</b><p>专题、观察和资产并列，更适合系统研究笔记。</p></article></div><div class="archive-note">这份记录是页面方向的历史比较，不是可发送的邮件模板。</div>`;
+  }
+  function frameworkPage() {
+    const gold=[['受众相关性','按生命周期、使用行为和购买意图分层。'],['单一目标','每封邮件只推动一个清晰的主行动。'],['价值先于优惠','先说明用户获得什么，再说明何时行动。'],['交付与可读性','兼顾层级、移动端、Gmail 和 Outlook。'],['可衡量闭环','用结果持续反哺下一轮内容与分层。']];
+    const workflow=[['定义策略','明确人群、业务目标、发送时机、主 CTA 与成功指标。'],['选择资产','优先复用已验证模板和组件，再生成分层版本。'],['质量检查','检查品牌、变量、URL、UTM 与客户端表现。'],['复盘沉淀','记录表现和结论，升级为可复用资产。']];
+    const agent=[['策略匹配度','匹配目标人群、业务目标、优惠边界与主 CTA。'],['首轮质量通过率','品牌、文案、变量、URL 与兼容性检查能否一次通过。'],['资产复用率','优先使用已验证模板与组件。'],['真实参与与业务增量','结合有效点击、落地页互动与后续转化；打开率仅作辅助信号。']];
+    const cards=items=>`<div class="compact-grid">${items.map(([name,desc],i)=>`<article class="compact-card"><span class="meta-label">${String(i+1).padStart(2,'0')}</span><b>${esc(name)}</b><p>${esc(desc)}</p></article>`).join('')}</div>`;
+    detail.innerHTML=heading('标准与行业基准原稿','原总览中的判断框架集中存档。')+`<section class="detail-section"><h2>EDM 的五项金标准</h2>${cards(gold)}</section><section class="detail-section"><h2>一封好的邮件：四步工作流</h2>${cards(workflow)}</section><section class="detail-section"><h2>Agent 时代的评判标准</h2>${cards(agent)}</section><section class="detail-section"><h2>行业基准线 · SaaS 营销邮件</h2><table class="archive-table"><thead><tr><th>打开率*</th><th>点击率</th><th>CTOR</th><th>退信率</th><th>退订率</th></tr></thead><tbody><tr><td>38.14%</td><td>1.19%</td><td>6.81%</td><td>0.50%</td><td>0.14%</td></tr></tbody></table><div class="archive-note">这是原总览记录的 2025 benchmark sample，保留作历史参照。使用前应复核来源、区域和邮件类型；打开率受隐私代理与自动读取影响，只作辅助信号。</div></section>`;
+  }
+  function guidelinesPage() {
+    const rows=[['邮件宽度','桌面主容器 600px','移动端 100% 宽度；关键 CTA 可全宽。'],['品牌色','Ink #08070B · Mint #1FF2CF · Pink #D61BAF','每封邮件控制在 2–3 个主色。'],['Logo','使用公网 HTTPS 图片 URL','不用本地路径，并提供 alt 文本。'],['CTA','每封邮件 1 个明确主 CTA','核对 href、UTM 与链接文案。'],['文案','主题行 + Preheader + 首屏价值','根据人群使用对应分层内容。'],['兼容性','Gmail、Outlook、移动端、Mailchimp','重要活动实际测试；Outlook 不依赖圆角。'],['入库','标注已验证或待复查','只有可发送版本进入自有模板库，记录修改日期。']];
+    detail.innerHTML=heading('发送与入库规范','品牌、内容、链接和客户端检查口径。')+`<table class="archive-table"><thead><tr><th>项目</th><th>当前规范</th><th>检查点</th></tr></thead><tbody>${rows.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table><div class="archive-note"><b>模板命名</b>：<code>[阶段]-[人群]-[目标]-[套餐/功能]-v01.html</code><br>例如 <code>earlybird-active-standard-upgrade-v01.html</code>。</div>`;
+  }
+  function maintenancePage() {
+    detail.innerHTML=heading('维护说明','源文件和站点数据在 GitHub 维护。')+`<section class="detail-section"><h2>新增品牌模板</h2><p>将最终 HTML 放入相应的 <code>outputs/</code> 目录，并在 <code>edm-library/assets/data.js</code> 的 <code>templates</code> 数组新增记录。</p><p>必填字段：id、name、phase、audience、goal、tags、desc、file、subject、preheader、cta、status。</p></section><section class="detail-section"><h2>新增外部资源</h2><p>在同一数据文件的 <code>resources</code> 数组记录用途、类型、来源链接和检索日期。</p></section><section class="detail-section"><h2>入库门槛</h2><ol><li>品牌 Logo 与色彩已确认。</li><li>CTA、UTM 与人群文案已替换。</li><li>完成移动端、Gmail、Outlook 与 Mailchimp 测试。</li><li>记录主题行、Preheader、发送时机及最终表现。</li></ol></section><a class="source-link" href="https://github.com/outofbox-mp4/edm-asset-library/blob/main/edm-library/README.md" target="_blank" rel="noopener noreferrer">查看 GitHub 中的维护原文</a>`;
+  }
+  route();
+})();
