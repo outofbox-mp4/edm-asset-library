@@ -98,8 +98,15 @@
   }
 
   function componentsPage() {
-    const components=window.EDM_COMPONENTS||[];
-    detail.innerHTML=heading('内容组件','预览效果并复制对应的邮件 HTML 片段。')+`<div class="archive-note">代码中的 <code>{{变量}}</code> 需要替换为本次邮件的实际文案、价格和 URL。复制后在 Mailchimp、Gmail、Outlook 和移动端测试。</div>`+components.map(item=>`<section class="component-record" id="component-${esc(item.id)}"><div class="component-heading"><div><h2>${esc(item.name)}</h2><p>${esc(item.description)}</p></div><button class="plain-button copy-component" data-copy="${esc(item.id)}" type="button">复制代码</button></div><div class="component-preview"><iframe title="${esc(item.name)}预览" data-preview="${esc(item.id)}" style="height:${Number(item.height)||220}px" sandbox=""></iframe></div><label class="code-label" for="code-${esc(item.id)}">HTML 代码</label><textarea class="component-code" id="code-${esc(item.id)}" readonly spellcheck="false">${esc(item.html)}</textarea><span class="copy-status" data-copy-status="${esc(item.id)}" role="status"></span></section>`).join('');
+    const catalog=window.EDM_COMPONENTS||[];
+    const groups=[
+      {name:'开头与识别',ids:['campaign-banner','hero','segment-intro']},
+      {name:'产品价值',ids:['ai-request','three-steps']},
+      {name:'套餐与优惠',ids:['pricing','single-plan','plan-benefits','deadline','offer','secondary-plan-note']},
+      {name:'合规信息',ids:['footer']}
+    ];
+    const components=groups.flatMap(group=>group.ids.map(id=>catalog.find(item=>item.id===id)).filter(Boolean));
+    detail.innerHTML=heading('内容组件','预览效果并复制对应的邮件 HTML 片段。')+`<div class="archive-note">代码中的 <code>{{变量}}</code> 需要替换为本次邮件的实际文案、价格和 URL。预览为示例文案，价格与时段不能直接用于发送；复制后在 Mailchimp、Gmail、Outlook 和移动端测试。</div>`+groups.map(group=>`<h2 class="component-group-title">${esc(group.name)}</h2>`+group.ids.map(id=>catalog.find(item=>item.id===id)).filter(Boolean).map(item=>`<section class="component-record" id="component-${esc(item.id)}"><div class="component-heading"><div><h2>${esc(item.name)}</h2><p>${esc(item.description)}</p>${item.source?`<a class="source-link" href="${esc(item.source)}" target="_blank" rel="noopener noreferrer">查看来源模板 ↗</a>`:''}</div><button class="plain-button copy-component" data-copy="${esc(item.id)}" type="button">复制代码</button></div><div class="component-preview"><iframe title="${esc(item.name)}预览" data-preview="${esc(item.id)}" style="height:${Number(item.height)||220}px" sandbox=""></iframe></div><label class="code-label" for="code-${esc(item.id)}">HTML 代码</label><textarea class="component-code" id="code-${esc(item.id)}" readonly spellcheck="false">${esc(item.html)}</textarea><span class="copy-status" data-copy-status="${esc(item.id)}" role="status"></span></section>`).join('')).join('');
     components.forEach(item=>{
       const frame=detail.querySelector(`[data-preview="${item.id}"]`);
       let preview=item.html;

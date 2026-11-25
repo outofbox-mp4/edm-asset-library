@@ -2,6 +2,7 @@
 @media(max-width:850px){.record-layout{grid-template-columns:1fr}.record-list{max-height:230px}.compact-grid{grid-template-columns:1fr}}@media(max-width:550px){.archive-table{display:block;overflow-x:auto}.archive-table th,.archive-table td{min-width:100px}.timeline{grid-template-columns:1fr}.record-detail{padding:14px}}
 
 .component-record{margin:24px 0 32px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:6px}
+.component-group-title{font-size:15px;line-height:1.4;color:var(--accent);margin:32px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
 .component-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:14px}
 .component-heading h2{font-size:17px;margin:0 0 5px}
 .component-heading p{font-size:13px;color:var(--muted);margin:0;max-width:600px}
