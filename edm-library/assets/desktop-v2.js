@@ -88,7 +88,7 @@
   function renderEdm() {
     const term = $('#edm-search').value.trim().toLowerCase();
     const list = templates.filter(t => (campaignFilter === 'all' || t.campaign === campaignFilter) && `${t.name} ${t.displayName} ${t.variant || ''} ${t.goal} ${t.campaign}`.toLowerCase().includes(term));
-    $('#edm-grid').innerHTML = list.length ? list.map((t,i) => `<button class="asset-tile" data-template="${esc(t.id)}"><span class="tile-art" data-mark="${esc(t.phase)}" style="--art:${i%2?'#dbfff0':'#191919'};--art-ink:${i%2?'#161616':'#e9a3a8'}"></span><span class="tile-text"><strong>${esc(t.displayName)}</strong><small>${esc(t.variant || t.desc)}</small></span></button>`).join('') : '<div class="empty">没有找到匹配的邮件模板。</div>';
+    $('#edm-grid').innerHTML = list.length ? list.map((t,i) => `<button class="asset-tile" data-template="${esc(t.id)}"><span class="tile-art" data-mark="${esc(t.campaign)}" style="--art:${i%2?'#dbfff0':'#191919'};--art-ink:${i%2?'#161616':'#e9a3a8'}"></span><span class="tile-text"><strong>${esc(t.displayName)}</strong><small>${esc(t.variant || t.desc)}</small></span></button>`).join('') : '<div class="empty">没有找到匹配的邮件模板。</div>';
   }
   function renderResources() {
     const groups = {visual:'视觉风格',modules:'内容模块',scale:'规模化邮件'};
