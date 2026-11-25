@@ -100,9 +100,9 @@
   function componentsPage() {
     const catalog=window.EDM_COMPONENTS||[];
     const groups=[
-      {name:'开头与识别',ids:['campaign-banner','hero','segment-intro']},
-      {name:'产品价值',ids:['ai-request','three-steps']},
-      {name:'套餐与优惠',ids:['pricing','single-plan','plan-benefits','deadline','offer','secondary-plan-note']},
+      {name:'开头与识别',ids:['hero']},
+      {name:'产品价值',ids:['ai-request','three-steps','explainer']},
+      {name:'套餐与优惠',ids:['pricing','single-plan','featured-comparison','offer-card','deadline','offer']},
       {name:'合规信息',ids:['footer']}
     ];
     const components=groups.flatMap(group=>group.ids.map(id=>catalog.find(item=>item.id===id)).filter(Boolean));

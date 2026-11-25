@@ -60,59 +60,20 @@ window.EDM_COMPONENTS = [
   },
   {
     id: 'offer',
-    name: '轻量优惠提示',
-    description: '放在功能价值之后，作为辅助信息。替换活动文案、优惠额度和活动页链接。',
-    source: '../outputs/black-friday-main-phase/regular-free-ai-assistant.html',
-    height: 150,
+    name: '轻量活动提示',
+    description: '放在价值内容之后，用一行文字提示优惠与活动入口；不会抢占主要信息。',
+    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    height: 105,
     sample: {
-      '{{OFFER_LABEL}}': 'BLACK FRIDAY',
-      '{{OFFER_TEXT}}': 'Save up to 45% when the offer opens',
+      '{{OFFER_LABEL}}': 'BLACK FRIDAY EARLY BIRD',
+      '{{OFFER_TEXT}}': 'Save up to 45% OFF · Opens Nov 18 ·',
       '{{OFFER_LINK_TEXT}}': 'View the offer',
-      '{{OFFER_URL}}': 'https://www.octoparse.com/'
+      '{{OFFER_URL}}': 'https://www.octoparse.com/black-friday-sale-2026'
     },
-    html: `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;background:#F6F8F5;border-top:1px solid #DFE5DE;">
-  <tr><td align="center" style="padding:18px 22px;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;max-width:600px;">
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;color:#435D4C;font-size:11px;font-weight:bold;letter-spacing:1px;padding-bottom:5px;">{{OFFER_LABEL}}</td></tr>
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;color:#08070B;font-size:15px;line-height:1.5;">{{OFFER_TEXT}}. <a href="{{OFFER_URL}}" style="color:#24543B;text-decoration:underline;font-weight:bold;">{{OFFER_LINK_TEXT}}</a></td></tr>
-    </table>
-  </td></tr>
-</table>`
-  },
-  {
-    id: 'campaign-banner',
-    name: '顶部活动图',
-    description: '用于已有品牌与活动信息的横幅图。整张图可点击；替换图片地址、替代文字和活动页链接。',
-    source: '../outputs/mailchimp-en26-black-friday/BF26activebscmo_stg1_en.html',
-    height: 205,
-    sample: {
-      '{{BANNER_URL}}': 'https://mcusercontent.com/768948aaa867ebe350db36a6a/images/63005fe8-35de-6f25-0aaa-5cc616ca0630.png',
-      '{{BANNER_ALT}}': 'Octoparse Black Friday campaign',
-      '{{LANDING_URL}}': 'https://www.octoparse.com/black-friday-sale-2026'
-    },
-    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#050307;">
-  <tr><td align="center" style="padding:0;">
-    <a href="{{LANDING_URL}}" target="_blank" style="display:block;text-decoration:none;"><img src="{{BANNER_URL}}" width="600" alt="{{BANNER_ALT}}" style="display:block;width:100%;max-width:600px;height:auto;border:0;outline:none;"></a>
-  </td></tr>
-</table>`
-  },
-  {
-    id: 'segment-intro',
-    name: '分层问候与价值说明',
-    description: '用于按用户状态调整首段文案。保留 Mailchimp 姓名变量，也可替换为其他 ESP 的变量语法。',
-    source: '../outputs/mailchimp-en26-black-friday/BF26free_stg1_en.html',
-    height: 225,
-    sample: {
-      '{{SEGMENT_LABEL}}': 'WELCOME BACK',
-      '{{HEADLINE}}': 'Your next data project can start here.',
-      '{{FIRST_NAME}}': 'Alex',
-      '{{VALUE_TEXT}}': 'Tell AI Assistant what you need. It helps you find a practical way to collect the data, then refine the results before export.'
-    },
-    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#FFFFFF;">
-  <tr><td style="padding:30px 28px;font-family:Arial,Helvetica,sans-serif;">
-    <div style="color:#9A1670;font-size:12px;font-weight:bold;letter-spacing:1px;">{{SEGMENT_LABEL}}</div>
-    <div style="padding-top:10px;color:#050307;font-size:27px;line-height:1.25;font-weight:bold;">{{HEADLINE}}</div>
-    <div style="padding-top:14px;color:#45384A;font-size:15px;line-height:1.6;">Hi {{FIRST_NAME}},<br><br>{{VALUE_TEXT}}</div>
+    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#FFF8E9;">
+  <tr><td align="center" style="padding:16px 20px;text-align:center;font-family:Arial,Helvetica,sans-serif;color:#9A5A00;">
+    <div style="font-size:12px;line-height:18px;letter-spacing:1px;font-weight:bold;">{{OFFER_LABEL}}</div>
+    <div style="padding-top:3px;font-size:14px;line-height:21px;">{{OFFER_TEXT}} <a href="{{OFFER_URL}}" style="color:#9A5A00;text-decoration:underline;font-weight:bold;">{{OFFER_LINK_TEXT}}</a></div>
   </td></tr>
 </table>`
   },
@@ -202,39 +163,94 @@ window.EDM_COMPONENTS = [
 </table>`
   },
   {
-    id: 'plan-benefits',
-    name: '套餐权益清单',
-    description: '接在价格区之后解释用户具体获得什么。权益应与所展示的套餐一致，发送前逐项核对。',
-    source: '../outputs/black-friday-early-bird/early-bird-standard-two-plans.html',
-    height: 180,
+    id: 'offer-card',
+    name: '黑金优惠卡',
+    description: '文字和按钮组成的活动卡，可在不依赖横幅图片的情况下突出优惠信息。',
+    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    height: 245,
     sample: {
-      '{{BENEFITS_TITLE}}': 'More included with Standard Annual',
-      '{{BENEFIT_1}}': 'Extra cloud nodes for your workflow',
-      '{{BENEFIT_2}}': 'Monthly balance benefits',
-      '{{BENEFIT_3}}': 'Crawler Setup support'
+      '{{BRAND_LABEL}}': 'OCTOPARSE BLACK FRIDAY',
+      '{{OFFER_HEADLINE}}': 'UP TO 45% OFF',
+      '{{OFFER_SUBTITLE}}': 'SUBSCRIBER EARLY BIRD · OPENS NOV 18',
+      '{{OFFER_DETAIL}}': 'Available for 36 hours.',
+      '{{CTA_TEXT}}': 'PREVIEW OFFER',
+      '{{CTA_URL}}': 'https://www.octoparse.com/black-friday-sale-2026'
     },
-    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#D7FFE9;">
-  <tr><td style="padding:22px 26px;font-family:Arial,Helvetica,sans-serif;color:#050307;">
-    <div style="font-size:17px;line-height:24px;font-weight:bold;padding-bottom:9px;">{{BENEFITS_TITLE}}</div>
-    <div style="font-size:14px;line-height:23px;">• {{BENEFIT_1}}<br>• {{BENEFIT_2}}<br>• {{BENEFIT_3}}</div>
+    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#FFFFFF;">
+  <tr><td style="padding:20px;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#090806;border:1px solid #B88D39;">
+      <tr><td align="center" style="padding:20px 16px 22px;text-align:center;">
+        <div style="font-size:10px;line-height:15px;letter-spacing:2px;font-weight:bold;color:#E8C56A;">{{BRAND_LABEL}}</div>
+        <div style="padding-top:4px;font-size:32px;line-height:38px;font-weight:bold;color:#F3CF79;">{{OFFER_HEADLINE}}</div>
+        <div style="padding-top:4px;font-size:12px;line-height:18px;letter-spacing:.7px;font-weight:bold;color:#FFFFFF;">{{OFFER_SUBTITLE}}</div>
+        <div style="padding-top:5px;font-size:13px;line-height:19px;color:#D9D2C3;">{{OFFER_DETAIL}}</div>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:14px auto 0;"><tr><td bgcolor="#E6BD60" style="background:#E6BD60;padding:11px 18px;"><a href="{{CTA_URL}}" style="display:inline-block;font-size:13px;line-height:18px;font-weight:bold;color:#090806;text-decoration:none;">{{CTA_TEXT}}</a></td></tr></table>
+      </td></tr>
+    </table>
   </td></tr>
 </table>`
   },
   {
-    id: 'secondary-plan-note',
-    name: '次级套餐文字引导',
-    description: '主 CTA 之后用一句话提供其他合适方案，避免再加大型价格卡。替换方案内容与次级链接。',
-    source: '../outputs/black-friday-main-phase/regular-free-ai-assistant.html',
-    height: 145,
+    id: 'explainer',
+    name: '插入说明',
+    description: '在主要内容之间插入一项关键权益或产品信息，控制在标题、说明和补充句三层。',
+    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    height: 195,
     sample: {
-      '{{PLAN_NOTE}}': 'Need more capacity? Explore the plan that fits your next project.',
-      '{{LINK_TEXT}}': 'Compare plans',
-      '{{LINK_URL}}': 'https://www.octoparse.com/'
+      '{{EXPLAINER_LABEL}}': 'A NEW BENEFIT FOR SUBSCRIBERS',
+      '{{EXPLAINER_HEADLINE}}': '10,000 free pay-per-result template rows / month',
+      '{{EXPLAINER_TEXT}}': 'More room to test and refine your collection plan.'
     },
-    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#050307;">
-  <tr><td style="padding:20px 26px;font-family:Arial,Helvetica,sans-serif;">
-    <div style="color:#E6DFEB;font-size:13px;line-height:21px;">{{PLAN_NOTE}}</div>
-    <a href="{{LINK_URL}}" style="display:inline-block;padding-top:8px;color:#7FF7E3;font-size:13px;line-height:20px;text-decoration:underline;">{{LINK_TEXT}}</a>
+    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#D7FFE9;">
+  <tr><td style="padding:28px 32px;font-family:Arial,Helvetica,sans-serif;">
+    <div style="font-size:12px;line-height:18px;letter-spacing:1px;font-weight:bold;color:#006F61;">{{EXPLAINER_LABEL}}</div>
+    <div style="padding-top:8px;font-size:22px;line-height:29px;font-weight:bold;color:#050307;">{{EXPLAINER_HEADLINE}}</div>
+    <div style="padding-top:8px;font-size:15px;line-height:23px;color:#45384A;">{{EXPLAINER_TEXT}}</div>
+  </td></tr>
+</table>`
+  },
+  {
+    id: 'featured-comparison',
+    name: '主次套餐并列对比',
+    description: '用一张大卡突出主推方案，再用两张小卡展示备选方案；价格和权益应逐项核对。',
+    source: '../outputs/mailchimp-en26-black-friday/BF26常规pro.html',
+    height: 395,
+    sample: {
+      '{{SECTION_LABEL}}': 'COMPARE ANNUAL PLANS',
+      '{{FEATURED_PLAN}}': 'PRO ANNUAL',
+      '{{FEATURED_PRICE}}': '$2,399',
+      '{{FEATURED_REGULAR}}': '$2,999',
+      '{{FEATURED_SAVINGS}}': '$600',
+      '{{FEATURED_BENEFIT}}': '10 bonus cloud nodes for six months',
+      '{{SECONDARY_PLAN_1}}': 'STANDARD 3-NODE ANNUAL',
+      '{{SECONDARY_PRICE_1}}': '$699',
+      '{{SECONDARY_REGULAR_1}}': '$829',
+      '{{SECONDARY_SAVINGS_1}}': '$130',
+      '{{SECONDARY_PLAN_2}}': 'STANDARD 6-NODE ANNUAL',
+      '{{SECONDARY_PRICE_2}}': '$929',
+      '{{SECONDARY_REGULAR_2}}': '$1,199',
+      '{{SECONDARY_SAVINGS_2}}': '$270'
+    },
+    html: `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#08070B;">
+  <tr><td style="padding:22px 18px 24px;font-family:Arial,Helvetica,sans-serif;">
+    <div style="padding-bottom:12px;text-align:center;font-size:11px;line-height:17px;letter-spacing:1px;font-weight:bold;color:#1FF2CF;">{{SECTION_LABEL}}</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#D7FFE9;border:2px solid #1FF2CF;">
+      <tr><td align="center" style="padding:20px 12px;text-align:center;color:#050307;">
+        <div style="font-size:13px;line-height:19px;font-weight:bold;">{{FEATURED_PLAN}}</div>
+        <div style="padding-top:6px;font-size:35px;line-height:41px;font-weight:bold;color:#C31991;">{{FEATURED_PRICE}}</div>
+        <div style="padding-top:4px;font-size:13px;line-height:20px;"><span style="text-decoration:line-through;">Regular {{FEATURED_REGULAR}}</span> &nbsp;·&nbsp; <strong>Save {{FEATURED_SAVINGS}}</strong></div>
+        <div style="padding-top:7px;font-size:11px;line-height:17px;">{{FEATURED_BENEFIT}}</div>
+      </td></tr>
+    </table>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-top:9px;"><tr>
+      <td width="49%" valign="top" align="center" style="width:49%;padding:14px 7px;background:#17131D;border:1px solid #51475A;text-align:center;color:#FFFFFF;">
+        <div style="min-height:34px;font-size:11px;line-height:16px;font-weight:bold;">{{SECONDARY_PLAN_1}}</div><div style="padding-top:5px;font-size:24px;line-height:29px;font-weight:bold;color:#FFB6EB;">{{SECONDARY_PRICE_1}}</div><div style="font-size:10px;line-height:16px;color:#D5CDDA;">Listed {{SECONDARY_REGULAR_1}}</div><div style="font-size:11px;line-height:17px;">Save {{SECONDARY_SAVINGS_1}}</div>
+      </td>
+      <td width="2%" style="width:2%;font-size:1px;line-height:1px;">&nbsp;</td>
+      <td width="49%" valign="top" align="center" style="width:49%;padding:14px 7px;background:#17131D;border:1px solid #51475A;text-align:center;color:#FFFFFF;">
+        <div style="min-height:34px;font-size:11px;line-height:16px;font-weight:bold;">{{SECONDARY_PLAN_2}}</div><div style="padding-top:5px;font-size:24px;line-height:29px;font-weight:bold;color:#FFB6EB;">{{SECONDARY_PRICE_2}}</div><div style="font-size:10px;line-height:16px;color:#D5CDDA;">Listed {{SECONDARY_REGULAR_2}}</div><div style="font-size:11px;line-height:17px;">Save {{SECONDARY_SAVINGS_2}}</div>
+      </td>
+    </tr></table>
   </td></tr>
 </table>`
   },

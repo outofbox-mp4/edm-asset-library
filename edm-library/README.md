@@ -26,7 +26,7 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 ## 新增内容组件
 
-在 `assets/component-snippets.js` 增加组件名称、用途、来源模板路径、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览、来源模板与可复制代码。目前收录首屏、活动图、时间提示、产品说明、套餐、权益和页脚等 12 个片段。示例价格与活动日期仅用于预览，代码入库前仍需替换变量并完成 Mailchimp、Gmail、Outlook 和移动端测试。
+在 `assets/component-snippets.js` 增加组件名称、用途、来源模板路径、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览、来源模板与可复制代码。目前收录首屏、活动提示、时间提示、产品说明、套餐对比和页脚等 11 个片段。示例价格与活动日期仅用于预览，代码入库前仍需替换变量并完成 Mailchimp、Gmail、Outlook 和移动端测试。
 
 ## 策略与 SOP
 
