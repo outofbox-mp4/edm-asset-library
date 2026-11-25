@@ -2,7 +2,7 @@
 
 这是一个无需构建工具的静态资产库。
 
-EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览入口。模板、组件、外部资源、使用示例和质量标准均在同一页内查看；原有分散页面会跳转到该索引页的对应档案。GitHub Pages 入口为 `https://outofbox-mp4.github.io/edm-asset-library/edm-library/`。
+EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览入口。模板、组件、外部资源、使用示例、策略与 SOP、质量标准均在同一页内查看；原有分散页面会跳转到该索引页的对应档案。GitHub Pages 入口为 `https://outofbox-mp4.github.io/edm-asset-library/edm-library/`。
 
 > 当 Agent 可以自动写文案、拼装 HTML 和发起任务时，人的价值不再是重复制作，而是定义策略、标准、质量门槛和反馈闭环。这个资产站用于把这些能力沉淀为可复用系统。
 
@@ -27,6 +27,12 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 ## 新增内容组件
 
 在 `assets/component-snippets.js` 增加组件名称、用途、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览与可复制代码；代码入库前仍需完成 Mailchimp、Gmail、Outlook 和移动端测试。
+
+## 策略与 SOP
+
+`assets/playbooks.js` 收录了生命周期邮件触发地图、发信基础检查和大促群发 SOP。它们根据内部历史文档重新整理为公开摘要，没有复制原文、私人联系人、账号信息、收件人名单、域名配置、活动成本、发送量或内部阈值。发信认证与测量方法附有官方参考链接；实际执行时应复核当前平台要求。
+
+新增条目时，只记录可公开分享的策略原则与可验证的操作步骤。不要将内部文档全文、凭据、配置截图、名单导出或个人信息提交到公开仓库。
 
 ## 入库门槛
 

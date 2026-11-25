@@ -3,9 +3,9 @@
   const home = document.getElementById('archive-home');
   const detail = document.getElementById('archive-detail');
   const search = document.getElementById('archive-search');
-  const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
+  const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',playbooks:'策略与 SOP',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  let selectedTemplate = null, templateFilter = 'all';
+  let selectedTemplate = null, selectedPlaybook = 'lifecycle', templateFilter = 'all';
 
   search.addEventListener('input', () => {
     const term=search.value.trim().toLowerCase();let total=0;
@@ -27,7 +27,7 @@
   function showView(view) {
     if(!labels[view]) {showHome();return;}
     home.hidden=true;detail.hidden=false;
-    const pages={templates:templatesPage,components:componentsPage,resources:resourcesPage,examples:examplesPage,framework:frameworkPage,guidelines:guidelinesPage,maintenance:maintenancePage};
+    const pages={templates:templatesPage,components:componentsPage,resources:resourcesPage,examples:examplesPage,playbooks:playbooksPage,framework:frameworkPage,guidelines:guidelinesPage,maintenance:maintenancePage};
     pages[view]();scrollTo({top:0,behavior:'auto'});
   }
   function route() {
@@ -76,6 +76,25 @@
     list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.displayName)}</b><small>${esc(t.variant||t.desc)}</small></button>`).join('');
     const t=rows.find(item=>item.id===selectedTemplate);
     pane.innerHTML=`<div class="meta-label">${esc(t.campaign)}</div><h2>${esc(t.displayName)}</h2><p>${esc(t.variant||t.desc)}</p><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd>${t.source?`<dt>来源</dt><dd>${esc(t.source)} · ${esc(t.name)}</dd>`:''}${t.subject?`<dt>主题行</dt><dd>${esc(t.subject)}</dd>`:''}${t.preheader?`<dt>Preheader</dt><dd>${esc(t.preheader)}</dd>`:''}${t.cta?`<dt>主 CTA</dt><dd>${esc(t.cta)}</dd>`:''}</dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.displayName)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+  }
+
+  function playbooksPage() {
+    detail.innerHTML=heading('策略与 SOP')+`<div class="record-layout"><div class="record-list" id="playbook-list" aria-label="策略与 SOP 目录"></div><article class="record-detail playbook-detail" id="playbook-detail"></article></div>`;
+    document.getElementById('playbook-list').addEventListener('click',event=>{
+      const button=event.target.closest('[data-playbook]');if(!button)return;
+      selectedPlaybook=button.dataset.playbook;
+      renderPlaybook();
+    });
+    renderPlaybook();
+  }
+  function renderPlaybook() {
+    const items=window.EDM_PLAYBOOKS||[];
+    if(!items.some(item=>item.id===selectedPlaybook))selectedPlaybook=items[0]?.id;
+    const active=items.find(item=>item.id===selectedPlaybook);
+    document.getElementById('playbook-list').innerHTML=items.map(item=>`<button class="record-item ${item.id===selectedPlaybook?'active':''}" data-playbook="${esc(item.id)}"><b>${esc(item.title)}</b><small>${esc(item.summary)}</small></button>`).join('');
+    if(!active)return;
+    const section=part=>`<section class="detail-section"><h3>${esc(part.title)}</h3>${part.rows?`<div class="table-scroll"><table class="archive-table"><thead><tr>${part.headers.map(head=>`<th>${esc(head)}</th>`).join('')}</tr></thead><tbody>${part.rows.map(row=>`<tr>${row.map(cell=>`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:''}${part.bullets?`<ul>${part.bullets.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`:''}</section>`;
+    document.getElementById('playbook-detail').innerHTML=`<h2>${esc(active.title)}</h2><p>${esc(active.summary)}</p>${active.sections.map(section).join('')}<div class="archive-note">${esc(active.note)}</div>${active.references.length?`<section class="detail-section"><h3>当前官方参考</h3><ul class="reference-list">${active.references.map(ref=>`<li><a class="inline-link" href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(ref.label)}</a></li>`).join('')}</ul></section>`:''}`;
   }
 
   function componentsPage() {
