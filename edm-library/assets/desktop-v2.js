@@ -95,7 +95,7 @@
     const card = event.target.closest('[data-ad]'); if (!card) return;
     const a = ads.find(item => item.id === card.dataset.ad); if (!a) return;
     $('#detail-title').textContent = a.name;
-    $('#detail-body').innerHTML = `<div class="eyebrow">AD ASSET / ${esc(a.kind)}</div><h2>${esc(a.name)}</h2><p class="lead">${esc(a.intro)}</p><div class="content-hero"><h3>资产预览</h3><ul class="detail-list">${a.bullets.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="button-row"><a class="primary" href="${a.url}" target="_blank" rel="noopener noreferrer">查看 GitHub 原始文件</a><button class="secondary" data-open="ads">返回广告目录</button></div>`;
+    $('#detail-body').innerHTML = `<div class="eyebrow">AD ASSET / ${esc(a.kind)}</div><h2>${esc(a.name)}</h2><p class="lead">${esc(a.intro)}</p><div class="content-hero"><h3>资产预览</h3><ul class="detail-list">${a.bullets.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="button-row"><a class="primary" href="ad-library/index.html#${a.id==='roi'?'methodology?id=roi':a.id==='traffic'?'skills?id=skill-traffic':a.id==='experiment'?'skills?id=skill-experiment':'skills?id=skill-terms'}">查看档案记录</a><a class="secondary" href="${a.url}" target="_blank" rel="noopener noreferrer">查看 GitHub 原文件</a><button class="secondary" data-open="ads">返回广告目录</button></div>`;
     openWindow('detail');
   });
 
