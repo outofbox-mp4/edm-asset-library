@@ -5,7 +5,7 @@
   const search = document.getElementById('archive-search');
   const labels = {templates:'邮件模板',components:'内容组件',resources:'外部资源',examples:'资源使用示例',playbooks:'策略与 SOP',framework:'标准与行业基准原稿',guidelines:'发送与入库规范',maintenance:'维护说明'};
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  let selectedTemplate = null, selectedPlaybook = 'lifecycle', templateFilter = 'all';
+  let selectedTemplate = null, selectedPlaybook = 'lifecycle', templateFilter = 'all', audienceFilter = 'all', planFilter = 'all';
 
   search.addEventListener('input', () => {
     const term=search.value.trim().toLowerCase();let total=0;
@@ -47,14 +47,21 @@
     const phaseOrder={'预热期':0,'早鸟价':1,'早鸟价 36h':1,'正式活动':2};
     return [...library.templates,...(window.EDM_MAILCHIMP_TEMPLATES||[])].map(t=>{
       const campaign=t.campaign||t.tags?.[0]||'Black Friday';
-      return {...t,campaign,displayName:`${t.phase} · ${t.audience}`,tags:[campaign,t.phase,t.audience]};
-    }).sort((a,b)=>(phaseOrder[a.phase]??9)-(phaseOrder[b.phase]??9)||a.audience.localeCompare(b.audience,'zh'));
+      const stage=t.phase==='早鸟价 36h'?'早鸟价':t.phase;
+      const audienceTags=[['付费用户',/付费|在期/],['试用用户',/试用/],['免费用户',/免费/],['流失用户',/流失|到期/],['订阅用户',/订阅/]].filter(([,pattern])=>pattern.test(t.audience)).map(([label])=>label);
+      const planTags=[['Standard',/Standard/i],['Pro',/Pro/i],['Basic',/Basic/i],['AI Assistant',/AI Assistant/i]].filter(([,pattern])=>pattern.test(t.variant||'')).map(([label])=>label);
+      return {...t,campaign,stage,audienceTags,planTags,tags:[campaign,t.phase,t.audience,t.variant,...audienceTags,...planTags]};
+    }).sort((a,b)=>(phaseOrder[a.phase]??9)-(phaseOrder[b.phase]??9)||a.variant.localeCompare(b.variant,'zh')||a.audience.localeCompare(b.audience,'zh'));
   }
   function templatesPage() {
     const campaigns=[...new Set(templateRecords().map(t=>t.campaign))];
-    detail.innerHTML=heading('邮件模板','按活动查找，在当前页查看分层版本与 HTML 预览。')+
-      `<input class="detail-search" id="template-search" type="search" placeholder="搜索活动、阶段或人群" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部</button>${campaigns.map(c=>`<button data-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
+    detail.innerHTML=heading('邮件模板','按活动阶段浏览版式，再选择对应套餐版本。')+
+      `<input class="detail-search" id="template-search" type="search" placeholder="搜索活动、套餐或人群" aria-label="搜索邮件模板"><div class="filter-bar" id="template-filters"><button class="active" data-filter="all">全部活动</button>${campaigns.map(c=>`<button data-filter="${esc(c)}">${esc(c)}</button>`).join('')}</div><div class="template-selectors"><label>人群 <select id="audience-filter"><option value="all">全部人群</option>${['付费用户','试用用户','免费用户','流失用户','订阅用户'].map(v=>`<option value="${v}">${v}</option>`).join('')}</select></label><label>方案 <select id="plan-filter"><option value="all">全部方案</option>${['Standard','Pro','Basic','AI Assistant'].map(v=>`<option value="${v}">${v}</option>`).join('')}</select></label></div><div class="record-layout"><div class="record-list" id="template-list"></div><div class="record-detail" id="template-detail"></div></div>`;
     document.getElementById('template-search').addEventListener('input',renderTemplateList);
+    document.getElementById('audience-filter').value=audienceFilter;
+    document.getElementById('plan-filter').value=planFilter;
+    document.getElementById('audience-filter').addEventListener('change',event=>{audienceFilter=event.target.value;renderTemplateList();});
+    document.getElementById('plan-filter').addEventListener('change',event=>{planFilter=event.target.value;renderTemplateList();});
     document.getElementById('template-filters').addEventListener('click',event=>{
       const button=event.target.closest('[data-filter]');if(!button)return;
       templateFilter=button.dataset.filter;
@@ -69,13 +76,17 @@
   }
   function renderTemplateList() {
     const query=document.getElementById('template-search')?.value.toLowerCase().trim()||'';
-    const rows=templateRecords().filter(t=>(templateFilter==='all'||t.campaign===templateFilter)&&`${t.name} ${t.displayName} ${t.variant||''} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
+    const rows=templateRecords().filter(t=>(templateFilter==='all'||t.campaign===templateFilter)&&(audienceFilter==='all'||t.audienceTags.includes(audienceFilter))&&(planFilter==='all'||t.planTags.includes(planFilter))&&`${t.name} ${t.phase} ${t.audience} ${t.variant||''} ${t.goal} ${t.tags.join(' ')}`.toLowerCase().includes(query));
     const list=document.getElementById('template-list'),pane=document.getElementById('template-detail');
     if(!rows.length){list.innerHTML='<div class="empty-state">没有匹配的模板。</div>';pane.innerHTML='<div class="empty-state">调整搜索词或筛选条件。</div>';return;}
     if(!rows.some(t=>t.id===selectedTemplate))selectedTemplate=rows[0].id;
-    list.innerHTML=rows.map(t=>`<button class="record-item ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.displayName)}</b><small>${esc(t.variant||t.desc)}</small></button>`).join('');
+    const stages=['预热期','早鸟价','正式活动'];
+    list.innerHTML=stages.map(stage=>{
+      const items=rows.filter(t=>t.stage===stage);if(!items.length)return '';
+      return `<div class="template-stage-heading">${esc(stage)} <span>${items.length}</span></div>`+items.map(t=>`<button class="record-item template-record ${t.id===selectedTemplate?'active':''}" data-template="${esc(t.id)}"><b>${esc(t.variant||t.name)}</b><small>${esc(t.audience)}</small></button>`).join('');
+    }).join('');
     const t=rows.find(item=>item.id===selectedTemplate);
-    pane.innerHTML=`<div class="meta-label">${esc(t.campaign)}</div><h2>${esc(t.displayName)}</h2><p>${esc(t.variant||t.desc)}</p><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd>${t.source?`<dt>来源</dt><dd>${esc(t.source)} · ${esc(t.name)}</dd>`:''}${t.subject?`<dt>主题行</dt><dd>${esc(t.subject)}</dd>`:''}${t.preheader?`<dt>Preheader</dt><dd>${esc(t.preheader)}</dd>`:''}${t.cta?`<dt>主 CTA</dt><dd>${esc(t.cta)}</dd>`:''}</dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.displayName)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
+    pane.innerHTML=`<div class="meta-label">${esc(t.campaign)} · ${esc(t.stage)}</div><h2>${esc(t.variant||t.name)}</h2><div class="template-tags">${[t.phase,t.audience,...t.planTags].map(tag=>`<span>${esc(tag)}</span>`).join('')}</div><dl><dt>说明</dt><dd>${esc(t.desc)}</dd><dt>目标</dt><dd>${esc(t.goal)}</dd>${t.source?`<dt>来源</dt><dd>${esc(t.source)} · ${esc(t.name)}</dd>`:''}${t.subject?`<dt>主题行</dt><dd>${esc(t.subject)}</dd>`:''}${t.preheader?`<dt>Preheader</dt><dd>${esc(t.preheader)}</dd>`:''}${t.cta?`<dt>主 CTA</dt><dd>${esc(t.cta)}</dd>`:''}</dl><div class="detail-actions"><a class="plain-button" href="${esc(t.file)}" download>下载 HTML</a></div><iframe class="preview-frame" title="${esc(t.stage)} ${esc(t.variant||t.name)} HTML 预览" src="${esc(t.file)}" loading="lazy"></iframe>`;
   }
 
   function playbooksPage() {
