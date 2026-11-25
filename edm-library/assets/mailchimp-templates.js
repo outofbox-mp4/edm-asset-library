@@ -10,8 +10,6 @@ window.EDM_MAILCHIMP_TEMPLATES = [
   ['10054560','BF26longexp_ft_stg1_en','预热期','长期流失用户','AI Assistant 召回','功能激活','用 AI Assistant 降低长期流失用户的重新上手门槛','Explore More'],
   ['10054563','BF26free_stg1_en','预热期','免费用户','AI Assistant + Basic','功能激活','面向免费用户的 AI Assistant 使用价值与 Basic 方案','Explore More'],
   ['10054577','BF26trialexp_planexp_ft3m_stg1_en','预热期','试用到期 / 套餐到期 / 短期流失','AI Assistant + 多套餐','召回','面向近期到期和流失用户的 AI Assistant 与套餐选择','Explore More'],
-  ['10054593','BF26补发_stg1_en','预热期','订阅用户 · 补发','AI Assistant 功能上新','功能激活','AI Assistant 功能介绍与黑五优惠预告补发版本','Try AI Assistant'],
-  ['10054594','BF26补发_stg1_en_V2','预热期','订阅用户 · 补发','AI Assistant 精简版','功能激活','AI Assistant 功能介绍与黑五优惠预告精简补发版本','Try AI Assistant'],
   ['10054598','BF26早鸟std','早鸟价 36h','Standard 相关付费用户','Standard 两档','套餐升级','36 小时内的 Standard 3-Node 与 6-Node 年付优惠','Choose my Standard plan'],
   ['10054599','BF26早鸟pro','早鸟价 36h','Pro 相关付费用户','Pro + Standard','套餐升级','36 小时内的 Pro 与 Standard 年付选择','See all Early Bird plans'],
   ['10054600','BF26早鸟free','早鸟价 36h','免费用户','AI Assistant + Basic','功能激活','以 AI Assistant 免费使用和 Basic 月付为主的早鸟邮件','Try Octoparse'],

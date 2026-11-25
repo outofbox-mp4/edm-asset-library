@@ -14,11 +14,11 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 模板标签只记录三个维度：`活动`、`阶段`、`人群`。例如 `['Black Friday', '早鸟价', '付费用户']`；请让标签与 `phase`、`audience` 字段一致。
 
-模板页按活动筛选，标题自动显示为“阶段 · 适配人群”。同一人群若有多个版本，可在 `variant` 字段写一句简短区分说明，例如 `Standard 单档`；它会显示在标题下方。
+模板页按活动阶段分组，以 `variant` 字段标明套餐或内容版本；适配人群作为标签与筛选条件，不放入主标题。示例：`Standard 单档`。
 
 ### Mailchimp Saved 模板
 
-`EN26黑五` 文件夹中的 20 份完整 HTML 导出存放于 `../outputs/mailchimp-en26-black-friday/`，索引元数据在 `assets/mailchimp-templates.js`。记录保留 Mailchimp 模板 ID、原始名称、活动阶段和适配人群。此批是 Saved 模板原件；发送前仍需复核优惠时效、链接、变量、退订信息和客户端显示。只有 HTML 中明确写出的主题行与 Preview 才录入对应字段。
+`EN26黑五` 文件夹中纳入资产库的 18 份完整 HTML 导出存放于 `../outputs/mailchimp-en26-black-friday/`，索引元数据在 `assets/mailchimp-templates.js`。记录保留 Mailchimp 模板 ID、原始名称、活动阶段和适配人群。发送前仍需复核优惠时效、链接、变量、退订信息和客户端显示。只有 HTML 中明确写出的主题行与 Preview 才录入对应字段。
 
 ## 新增外部资源
 
@@ -26,7 +26,7 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 ## 新增内容组件
 
-在 `assets/component-snippets.js` 增加组件名称、用途、来源模板路径、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览、来源模板与可复制代码。目前收录首屏、活动提示、时间提示、产品说明、套餐对比和页脚等 11 个片段。示例价格与活动日期仅用于预览，代码入库前仍需替换变量并完成 Mailchimp、Gmail、Outlook 和移动端测试。
+在 `assets/component-snippets.js` 增加组件名称、用途、可选的来源模板路径、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览、可用的来源模板与可复制代码。目前收录首屏、活动提示、时间提示、产品说明、套餐对比和页脚等 11 个片段。示例价格与活动日期仅用于预览，代码入库前仍需替换变量并完成 Mailchimp、Gmail、Outlook 和移动端测试。
 
 ## 策略与 SOP
 

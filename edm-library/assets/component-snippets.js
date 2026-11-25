@@ -62,7 +62,7 @@ window.EDM_COMPONENTS = [
     id: 'offer',
     name: '轻量活动提示',
     description: '放在价值内容之后，用一行文字提示优惠与活动入口；不会抢占主要信息。',
-    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    source: '',
     height: 105,
     sample: {
       '{{OFFER_LABEL}}': 'BLACK FRIDAY EARLY BIRD',
@@ -166,7 +166,7 @@ window.EDM_COMPONENTS = [
     id: 'offer-card',
     name: '黑金优惠卡',
     description: '文字和按钮组成的活动卡，可在不依赖横幅图片的情况下突出优惠信息。',
-    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    source: '',
     height: 245,
     sample: {
       '{{BRAND_LABEL}}': 'OCTOPARSE BLACK FRIDAY',
@@ -194,7 +194,7 @@ window.EDM_COMPONENTS = [
     id: 'explainer',
     name: '插入说明',
     description: '在主要内容之间插入一项关键权益或产品信息，控制在标题、说明和补充句三层。',
-    source: '../outputs/mailchimp-en26-black-friday/BF26补发_stg1_en.html',
+    source: '',
     height: 195,
     sample: {
       '{{EXPLAINER_LABEL}}': 'A NEW BENEFIT FOR SUBSCRIBERS',
