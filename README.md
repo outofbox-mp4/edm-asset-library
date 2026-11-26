@@ -13,7 +13,7 @@ The desktop interaction and pixel art are adapted from the [Cats with Jobs Webfl
 - `edm-library/`: asset-site pages, reusable components, standards, and central metadata.
 - `outputs/black-friday-early-bird/`: approved Black Friday Early Bird email HTML and copy files.
 - `outputs/black-friday-main-phase/`: approved Black Friday main-phase email HTML and copy files.
-- `tools/edm-preview-kit/`: reusable multi-audience email preview generator and portable example.
+- `tools/edm-preview-kit/`: brief-to-email workflow, reusable multi-audience preview generator, and portable example.
 
 ## Maintenance
 

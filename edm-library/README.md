@@ -28,9 +28,9 @@ EDM 库只使用 [`overview-classic.html`](overview-classic.html) 作为浏览�
 
 在 `assets/component-snippets.js` 增加组件名称、用途、可选的来源模板路径、带 `{{变量}}` 的邮件 HTML 片段和预览样例值。组件页会展示预览、可用的来源模板与可复制代码。目前收录首屏、活动提示、时间提示、产品说明、套餐对比和页脚等 11 个片段。示例价格与活动日期仅用于预览，代码入库前仍需替换变量并完成 Mailchimp、Gmail、Outlook 和移动端测试。
 
-## 多分层交付预览
+## 从活动背景制作多分层邮件
 
-`../tools/edm-preview-kit/` 提供独立的预览页生成器。以每个分层的最终邮件 HTML 和活动 JSON 为输入；预览页用于审阅，`emails/` 中的单封 HTML 用于邮件平台。运行方法见该目录的 README。
+`../tools/edm-preview-kit/` 记录了从活动背景与分层条件出发，参考 Colorlib 和既往模板生成文案、独立 HTML 与统一预览的流程。用户只需提供活动信息；Codex 负责内容、版式、HTML 和预览组装。预览页用于审阅，`emails/` 中的单封 HTML 用于邮件平台。使用方法见该目录的 README。
 
 ## 策略与 SOP
 

@@ -1,36 +1,42 @@
-# 多分层邮件预览工具
+# 从活动背景生成多分层邮件
 
-用途：把同一次活动的多封邮件放到一个预览页，方便逐封检查。预览页会显示每封邮件的适用人群、邮件标题（Subject）、收件箱预览文字（Preview text）和邮件正文，还能切换桌面、手机宽度。
+你只需提供活动背景和人群分层。Codex 会参考 [Colorlib](https://github.com/ColorlibHQ/email-templates) 和本库已有邮件，生成各分层的文案、HTML 和统一预览页；无需你先写邮件或填写配置。
 
-> **发送邮件时用哪份文件？** `index.html` 只给团队审阅；导入 Mailchimp 的是 `emails/` 文件夹里对应人群的单封 HTML。
+例如，你可以直接说：
 
-## 最简单的用法
+> 黑五活动即将开始。目标是让在期付费用户升级，让试用、免费和流失用户重新使用产品。请分别做邮件，先给我可切换的预览。优惠、时间和落地页信息在下面……
 
-把每个人群的最终邮件 HTML，以及对应的 Subject、Preview text 交给 Codex，然后说：
+如果暂时没有最终价格、日期或链接，Codex 会在预览中明确标注待确认，不会编造。
 
-> 请用这个多分层邮件预览工具，把这些邮件做成一个可切换的预览页，并给我每封独立 HTML。
+## 会得到什么
 
-Codex 会填写活动清单并生成预览。你只需检查每个分层的桌面、手机效果。
+- 每个人群一封独立邮件：包括 Subject、Preview text、正文和 CTA。
+- 一个总预览页：切换人群，查看桌面与手机效果。
+- 每封邮件的独立 HTML：确认后可用于 Mailchimp。
+- 简短的设计说明：用了哪份既往模板或哪种 Colorlib 风格作为参考，以及各分层为何这样写。
 
-## 自己运行示例
+**总预览页的 `index.html` 只用于审阅。导入 Mailchimp 时，使用 `emails/` 中对应人群的 HTML。**
 
-电脑需要安装 Node.js。在仓库文件夹运行：
+## 需要告诉 Codex 的信息
+
+活动目标、产品或功能、活动阶段、优惠与有效时间、落地页，以及每个人群的状态和希望他们采取的行动。可以用自然语言写，不需要按固定格式；[示例活动背景](brief.example.md)可供参考。
+
+Codex 按 [制作流程](WORKFLOW.md)完成选风格、分层文案、HTML 制作和检查。仓库里的 `build-preview.mjs` 只负责把**已生成的邮件**组装成预览页，它不是让你提前准备内容的入口。
+
+仓库示例展示了完整链条：[活动背景](brief.example.md) → [新用户邮件](examples/starter.html)与[付费用户邮件](examples/advanced.html) → [预览配置](campaign.example.json) → 总预览页。
+
+## 自己运行已有示例（可选）
+
+如果只是想看工具效果，电脑安装 Node.js 后，在仓库根目录运行：
 
 ```sh
 node tools/edm-preview-kit/build-preview.mjs tools/edm-preview-kit/campaign.example.json
 ```
 
-首次运行会得到 `tools/edm-preview-kit/dist/example-campaign/index.html`。如果直接双击后看不到邮件正文，再运行：
+首次运行会生成 `tools/edm-preview-kit/dist/example-campaign/index.html`。如果双击后邮件正文为空白，可运行本地预览服务：
 
 ```sh
 node tools/edm-preview-kit/serve-preview.mjs tools/edm-preview-kit/dist/example-campaign
 ```
 
-打开命令显示的本机网页地址，就能看到示例。再次生成时会新建 `example-campaign-v2`，旧版本不会被覆盖；此时第二条命令中的目录也要改为 `example-campaign-v2`。
-
-## 做自己的活动
-
-1. **准备邮件：**每个人群各有一份最终 HTML。
-2. **填写清单：**复制 [示例配置](campaign.example.json)，写上活动名称，以及每封邮件的人群、标题、预览文字和 HTML 文件位置。有本地图片时，也把图片列进去。
-3. **生成预览：**把上面第一条命令中的 `campaign.example.json` 换成你的配置文件路径。
-4. **检查并交付：**切换所有人群，检查桌面与手机效果；把预览页给团队审阅，把 `emails/` 中的单封 HTML 用于 Mailchimp。
+打开命令显示的本机地址即可。重复生成会新建 `-v2`、`-v3`，不会覆盖旧预览。
