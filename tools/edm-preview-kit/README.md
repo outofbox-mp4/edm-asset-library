@@ -1,28 +1,38 @@
-# EDM 多分层预览生成器
+# 多分层邮件预览工具
 
-为一次邮件活动生成统一的预览页。每个分层仍是一份独立 HTML；预览页提供分层切换、适用人群、Subject、Preview text、邮件正文预览、桌面/手机宽度切换和单封 HTML 入口。预览页本身不可导入 Mailchimp。
+**用途：把同一次活动的多封邮件放到一个预览页，方便逐封检查。**例如黑五活动有 Standard、Pro、试用和免费用户四封邮件，就能在同一页切换查看。
 
-## 运行示例
+预览页会显示每封邮件的适用人群、邮件标题（Subject）、收件箱预览文字（Preview text）和邮件正文，还能切换桌面、手机宽度。
 
-需要 Node.js 18 或更新版本，无第三方依赖。在仓库根目录运行：
+> **发送邮件时用哪份文件？** `index.html` 只给团队审阅；导入 Mailchimp 的是 `emails/` 文件夹里对应人群的单封 HTML。
+
+## 最简单的用法
+
+把每个人群的最终邮件 HTML，以及对应的 Subject、Preview text 交给 Codex，然后说：
+
+> 请用这个多分层邮件预览工具，把这些邮件做成一个可切换的预览页，并给我每封独立 HTML。
+
+Codex 会填写活动清单并生成预览。你只需检查每个分层的桌面、手机效果。
+
+## 自己运行示例
+
+电脑需要安装 Node.js。在仓库文件夹运行：
 
 ```sh
 node tools/edm-preview-kit/build-preview.mjs tools/edm-preview-kit/campaign.example.json
 ```
 
-打开命令输出的 `index.html`。若浏览器限制 `file://` 页面加载内嵌邮件，可用随附的本地服务器打开：
+首次运行会得到 `tools/edm-preview-kit/dist/example-campaign/index.html`。如果直接双击后看不到邮件正文，再运行：
 
 ```sh
 node tools/edm-preview-kit/serve-preview.mjs tools/edm-preview-kit/dist/example-campaign
 ```
 
-浏览器打开命令输出的本机地址。单封邮件在 `emails/` 中。
+打开命令显示的本机网页地址，就能看到示例。再次生成时会新建 `example-campaign-v2`，旧版本不会被覆盖；此时第二条命令中的目录也要改为 `example-campaign-v2`。
 
-## 用于新活动
+## 做自己的活动
 
-1. 为每个分层准备最终邮件 HTML，并确定 Subject 与 Preview text。
-2. 复制 `campaign.example.json` 到新活动目录，填写 `campaign`、`subtitle`、`variants`，有本地图片时列入 `sharedAssets`。`htmlFile`、`sharedAssets` 和 `outputDir` 均相对配置文件。
-3. 运行 `node tools/edm-preview-kit/build-preview.mjs path/to/campaign.json`，逐一检查桌面、手机、图片和“Open HTML”。
-4. 给邮件平台导入 `emails/` 中的单封 HTML，不要导入 `index.html`。
-
-脚本检查必填字段、重复分层 ID、缺失输入、图片重名，以及 HTML 中存在的 `<!-- Subject: ... -->`、`<!-- Preview: ... -->` 注释与配置是否一致。它会在已有输出旁生成 `-v2`、`-v3`，不覆盖旧版本。建议把真实活动的配置和输出存放在对应活动目录；此处的 `dist/` 已被忽略，不提交一次性的生成结果。
+1. **准备邮件：**每个人群各有一份最终 HTML。
+2. **填写清单：**复制 [示例配置](campaign.example.json)，写上活动名称，以及每封邮件的人群、标题、预览文字和 HTML 文件位置。有本地图片时，也把图片列进去。
+3. **生成预览：**把上面第一条命令中的 `campaign.example.json` 换成你的配置文件路径。
+4. **检查并交付：**切换所有人群，检查桌面与手机效果；把预览页给团队审阅，把 `emails/` 中的单封 HTML 用于 Mailchimp。
