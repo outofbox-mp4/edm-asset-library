@@ -1,0 +1,24 @@
+{
+  "campaign": "Example campaign",
+  "subtitle": "Compare two audience versions in one place",
+  "outputDir": "./dist/example-campaign",
+  "sharedAssets": [],
+  "variants": [
+    {
+      "id": "starter",
+      "label": "Starter",
+      "segment": "New and free users",
+      "subject": "A simpler way to get started",
+      "preview": "See the first steps in this example email.",
+      "htmlFile": "./examples/starter.html"
+    },
+    {
+      "id": "advanced",
+      "label": "Advanced",
+      "segment": "Current paid users",
+      "subject": "Make more of your current plan",
+      "preview": "Explore the next step in this example email.",
+      "htmlFile": "./examples/advanced.html"
+    }
+  ]
+}
