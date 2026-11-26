@@ -1,5 +1,4 @@
 (() => {
-  const base = 'https://github.com/outofbox-mp4/ad-ai-toolkit/blob/main/';
   const groups = [
     {id:'schemas',name:'数据口径',icon:'∑',intro:'先统一字段与转化定义，再比较账户表现。',items:[
       ['funnel','漏斗指标与计算口径','从花费、点击、注册、试用到付费和 ROI，定义每一层的指标。','data-schemas/funnel-metrics.md',['Spend → Clicks → Registrations → Trials → Payments → Revenue → ROI','列出 CTR、CPC、各阶段转化率、CPA、AOV 与 ROI 的计算方式','提醒区分过程指标与最终业务目标']],
@@ -73,8 +72,7 @@
     detail.innerHTML = `<a class="detail-back" href="#index">← 全部档案</a><div class="detail-header"><h1>${escape(g.name)}</h1><p>${escape(g.intro)}</p></div><input class="detail-search" type="search" placeholder="搜索${escape(g.name)}" aria-label="搜索${escape(g.name)}"><p class="record-count">共 ${g.items.length} 项</p><div class="record-layout"><div class="record-list">${g.items.map(entry).join('')}</div><article class="record-detail"></article></div>`;
     const list = $('.record-list'), filter = $('.detail-search');
     function render(a) {
-      const source = base + a[3];
-      $('.record-detail').innerHTML = `<span class="meta-label">${escape(g.name)} / 资产预览</span><h2>${escape(a[1])}</h2><p>${escape(a[2])}</p><div class="preview-note"><b>内容速览</b><ul class="preview-list">${a[4].map(x => `<li>${escape(x)}</li>`).join('')}</ul></div><div class="detail-actions"><a class="plain-button" href="${escape(source)}" target="_blank" rel="noopener noreferrer">查看 GitHub 原文件 ↗</a></div><span class="source-path">${escape(a[3])}</span>`;
+      $('.record-detail').innerHTML = `<span class="meta-label">${escape(g.name)} / 工作路径</span><h2>${escape(a[1])}</h2><p>${escape(a[2])}</p><div class="preview-note"><b>判断顺序</b><ul class="preview-list">${a[4].map(x => `<li>${escape(x)}</li>`).join('')}</ul></div>`;
       list.querySelectorAll('[data-id]').forEach(b => {const active=b.dataset.id===a[0];b.classList.toggle('active',active);b.setAttribute('aria-current',String(active));});
     }
     render(selected);

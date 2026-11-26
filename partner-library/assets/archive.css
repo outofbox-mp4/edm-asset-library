@@ -1,0 +1,4 @@
+:root{--accent:#80536a;--muted:#676e68;--bg:#f8f9f7}
+.back{border-color:#bf9bab}.sidebar a.active,.sidebar a:hover,.sidebar a:focus-visible{background:#f5e9ef;color:#432b37}.row:hover,.record-item:hover,.record-item.active{background:#fbf1f5}.glyph{border-color:#dfc6d3}.row:hover .arrow{color:var(--accent)}
+.record-detail h3{font-size:14px;margin:20px 0 7px}.record-detail ol{margin:0;padding-left:20px;font-size:13px;line-height:1.65}.record-detail li{margin:6px 0}.record-detail .deliverable{margin-top:20px;padding-top:13px;border-top:1px solid var(--line);font-size:13px}.record-detail .deliverable b{display:block;color:var(--accent);margin-bottom:3px}.record-detail .deliverable p{margin:0}
+.record-list .record-item[hidden]{display:none}.record-count{color:var(--muted);font-size:12px;margin:0 0 10px}
